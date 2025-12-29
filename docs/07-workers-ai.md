@@ -230,13 +230,13 @@ export default {
         <body>
           <div class="chat-container">
             <div class="chat-header">
-              <h1>🤖 AI Chatbot</h1>
+              <h1> AI Chatbot</h1>
               <p>Powered by Cloudflare Workers AI</p>
             </div>
 
             <div class="messages" id="messages">
               <div class="message ai">
-                <div class="avatar">🤖</div>
+                <div class="avatar"></div>
                 <div class="message-content">
                   Hi! I'm an AI chatbot running on Cloudflare Workers. How can I help you today?
                 </div>
@@ -293,7 +293,7 @@ export default {
                 const aiMsg = document.createElement('div');
                 aiMsg.className = 'message ai';
                 aiMsg.innerHTML = \`
-                  <div class="avatar">🤖</div>
+                  <div class="avatar"></div>
                   <div class="message-content">\${data.response}</div>
                 \`;
                 messagesDiv.appendChild(aiMsg);
@@ -304,7 +304,7 @@ export default {
                 const errorMsg = document.createElement('div');
                 errorMsg.className = 'message ai';
                 errorMsg.innerHTML = \`
-                  <div class="avatar">🤖</div>
+                  <div class="avatar"></div>
                   <div class="message-content">Sorry, I encountered an error. Please try again.</div>
                 \`;
                 messagesDiv.appendChild(errorMsg);
@@ -418,12 +418,12 @@ const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
 
 ## Key Features
 
-✅ Real-time chat interface  
-✅ AI-powered responses  
-✅ Beautiful UI with animations  
-✅ Mobile responsive  
-✅ Error handling  
-✅ Multiple AI models available  
+ Real-time chat interface  
+ AI-powered responses  
+ Beautiful UI with animations  
+ Mobile responsive  
+ Error handling  
+ Multiple AI models available  
 
 ---
 

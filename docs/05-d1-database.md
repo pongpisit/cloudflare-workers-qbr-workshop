@@ -134,11 +134,11 @@ For this workshop, you'll stay in the free tier.
 
 ## Key Takeaways
 
-✅ Created a D1 database  
-✅ Created a table with SQL  
-✅ Inserted sample data  
-✅ Queried the data  
-✅ Got database connection info  
+ Created a D1 database  
+ Created a table with SQL  
+ Inserted sample data  
+ Queried the data  
+ Got database connection info  
 
 ---
 

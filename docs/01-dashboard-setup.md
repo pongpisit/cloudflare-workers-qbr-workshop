@@ -160,7 +160,7 @@ After deployment, you'll see the Worker project dashboard with several tabs:
 
 1. Click the blue **Visit** button (top right)
 2. You should see "Hello World" in your browser
-3. Your first Worker is live! 🎉
+3. Your first Worker is live!
 
 ---
 
@@ -186,11 +186,11 @@ You can:
 
 ## Key Takeaways
 
-✅ Created a Cloudflare account  
-✅ Navigated the Dashboard  
-✅ Created your first Worker  
-✅ Deployed to the internet  
-✅ Tested your Worker  
+[x] Created a Cloudflare account  
+[x] Navigated the Dashboard  
+[x] Created your first Worker  
+[x] Deployed to the internet  
+[x] Tested your Worker  
 
 ---
 

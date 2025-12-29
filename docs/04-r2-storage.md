@@ -121,11 +121,11 @@ For this workshop, you'll stay in the free tier.
 
 ## Key Takeaways
 
-✅ Created an R2 bucket  
-✅ Configured public access  
-✅ Uploaded images  
-✅ Got image URLs  
-✅ Tested image access  
+ Created an R2 bucket  
+ Configured public access  
+ Uploaded images  
+ Got image URLs  
+ Tested image access  
 
 ---
 

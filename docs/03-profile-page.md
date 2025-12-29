@@ -197,10 +197,10 @@ export default {
         <body>
           <div class="container">
             <div class="header">
-              <div class="avatar">👨‍💼</div>
+              <div class="avatar">[Profile]</div>
               <div class="name">Your Name</div>
               <div class="title">Full Stack Developer</div>
-              <div class="location">🌍 Your City, Country</div>
+              <div class="location">Your City, Country</div>
             </div>
 
             <div class="content">
@@ -209,22 +209,22 @@ export default {
               </div>
 
               <div class="links">
-                <a href="/portfolio" class="link-btn">📁 Portfolio</a>
-                <a href="/projects" class="link-btn">🚀 Projects</a>
-                <a href="/blog" class="link-btn">📝 Blog</a>
-                <a href="/contact" class="link-btn">💬 Contact Me</a>
+                <a href="/portfolio" class="link-btn">Portfolio</a>
+                <a href="/projects" class="link-btn">Projects</a>
+                <a href="/blog" class="link-btn">Blog</a>
+                <a href="/contact" class="link-btn">Contact Me</a>
               </div>
 
               <div class="social">
-                <a href="#" class="social-icon" title="GitHub">🐙</a>
-                <a href="#" class="social-icon" title="Twitter">𝕏</a>
-                <a href="#" class="social-icon" title="LinkedIn">💼</a>
-                <a href="#" class="social-icon" title="Email">✉️</a>
+                <a href="#" class="social-icon" title="GitHub">GH</a>
+                <a href="#" class="social-icon" title="Twitter">TW</a>
+                <a href="#" class="social-icon" title="LinkedIn">IN</a>
+                <a href="#" class="social-icon" title="Email">@</a>
               </div>
             </div>
 
             <div class="footer">
-              Built with Cloudflare Workers ⚡
+              Built with Cloudflare Workers 
             </div>
           </div>
         </body>
@@ -247,7 +247,7 @@ export default {
           </style>
         </head>
         <body>
-          <h1>📁 Portfolio</h1>
+          <h1> Portfolio</h1>
           <p>My work and projects showcase.</p>
           <p><a href="/">← Back to Profile</a></p>
         </body>
@@ -270,7 +270,7 @@ export default {
           </style>
         </head>
         <body>
-          <h1>🚀 Projects</h1>
+          <h1> Projects</h1>
           <p>Check out my latest projects built with Cloudflare Workers.</p>
           <p><a href="/">← Back to Profile</a></p>
         </body>
@@ -293,7 +293,7 @@ export default {
           </style>
         </head>
         <body>
-          <h1>📝 Blog</h1>
+          <h1> Blog</h1>
           <p>Articles about web development and Cloudflare.</p>
           <p><a href="/">← Back to Profile</a></p>
         </body>
@@ -316,7 +316,7 @@ export default {
           </style>
         </head>
         <body>
-          <h1>💬 Contact Me</h1>
+          <h1> Contact Me</h1>
           <p>Get in touch with me for collaborations or inquiries.</p>
           <p>Email: your.email@example.com</p>
           <p><a href="/">← Back to Profile</a></p>
@@ -347,10 +347,10 @@ export default {
 Edit these values in the code:
 
 ```javascript
-<div class="avatar">👨‍💼</div>           // Change emoji
+<div class="avatar">‍</div>           // Change emoji
 <div class="name">Your Name</div>       // Your name
 <div class="title">Full Stack Developer</div>  // Your title
-<div class="location">🌍 Your City, Country</div>  // Your location
+<div class="location"> Your City, Country</div>  // Your location
 ```
 
 ---
@@ -360,20 +360,20 @@ Edit these values in the code:
 Update the social media links:
 
 ```javascript
-<a href="https://github.com/yourname" class="social-icon">🐙</a>
-<a href="https://twitter.com/yourname" class="social-icon">𝕏</a>
+<a href="https://github.com/yourname" class="social-icon"></a>
+<a href="https://twitter.com/yourname" class="social-icon"></a>
 ```
 
 ---
 
 ## Key Features
 
-✅ Responsive design (works on mobile)  
-✅ Gradient background  
-✅ Hover effects on buttons  
-✅ Professional styling  
-✅ Multiple pages  
-✅ Social media links  
+ Responsive design (works on mobile)  
+ Gradient background  
+ Hover effects on buttons  
+ Professional styling  
+ Multiple pages  
+ Social media links  
 
 ---
 

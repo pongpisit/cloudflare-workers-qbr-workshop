@@ -156,14 +156,14 @@ export default {
           </head>
           <body>
             <div class="container">
-              <h1>📸 Photo Gallery</h1>
+              <h1> Photo Gallery</h1>
               <p class="subtitle">Built with Cloudflare Workers, R2, and D1</p>
         `;
 
         if (photos.length === 0) {
           html += `
             <div class="empty">
-              <div class="empty-icon">📷</div>
+              <div class="empty-icon"></div>
               <p>No photos yet. Upload some images to R2 and add captions to D1!</p>
             </div>
           `;
@@ -315,12 +315,12 @@ Then refresh your gallery page to see the new photo.
 
 ## Key Features
 
-✅ Displays images from R2  
-✅ Shows captions from D1  
-✅ Responsive grid layout  
-✅ Hover effects  
-✅ JSON API endpoint  
-✅ Error handling  
+ Displays images from R2  
+ Shows captions from D1  
+ Responsive grid layout  
+ Hover effects  
+ JSON API endpoint  
+ Error handling  
 
 ---
 

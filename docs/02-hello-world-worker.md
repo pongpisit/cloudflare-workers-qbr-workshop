@@ -65,7 +65,7 @@ export default {
           </style>
         </head>
         <body>
-          <h1>👋 Hello World!</h1>
+          <h1> Hello World!</h1>
           <p>Welcome to my Cloudflare Worker</p>
           <p>This page is running on the edge!</p>
           <div class="links">
@@ -143,7 +143,7 @@ export default {
           </style>
         </head>
         <body>
-          <h1>👋 Hello World!</h1>
+          <h1> Hello World!</h1>
           <p>Welcome to my Cloudflare Worker</p>
           <p>This page is running on the edge!</p>
           <div class="links">
@@ -262,7 +262,7 @@ return new Response(JSON.stringify({
 Edit the HTML to add your own information:
 
 ```javascript
-<h1>👋 Your Name Here</h1>
+<h1> Your Name Here</h1>
 <p>Your bio or description</p>
 <p>Your location or role</p>
 ```
@@ -271,11 +271,11 @@ Edit the HTML to add your own information:
 
 ## Key Takeaways
 
-✅ Created a Worker with multiple routes  
-✅ Returned HTML with styling  
-✅ Returned JSON responses  
-✅ Handled 404 errors  
-✅ Customized the profile page  
+[x] Created a Worker with multiple routes  
+[x] Returned HTML with styling  
+[x] Returned JSON responses  
+[x] Handled 404 errors  
+[x] Customized the profile page  
 
 ---
 

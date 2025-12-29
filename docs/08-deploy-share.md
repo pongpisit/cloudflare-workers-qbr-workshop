@@ -147,12 +147,12 @@ const apiKey = env.MY_API_KEY;
 
 ## Step 8: Understand Deployment Status
 
-### Green Status ✅
+### Green Status 
 - Worker is deployed and live
 - All requests are being handled
 - No errors
 
-### Red Status ❌
+### Red Status 
 - Deployment failed
 - Check error message
 - Review your code for syntax errors
@@ -182,7 +182,7 @@ https://[your-worker].workers.dev
 ### Share on Social Media
 
 ```
-Just built an AI chatbot with Cloudflare Workers! 🚀
+Just built an AI chatbot with Cloudflare Workers! 
 Check it out: https://[your-worker].workers.dev
 Built with Workers, R2, D1, and Workers AI
 ```
@@ -199,11 +199,11 @@ Include in your portfolio or resume:
 
 ## Key Takeaways
 
-✅ Worker is deployed and live  
-✅ Shared your Worker URL  
-✅ Monitored your Worker  
-✅ Understood deployment options  
-✅ Ready to share with the world  
+ Worker is deployed and live  
+ Shared your Worker URL  
+ Monitored your Worker  
+ Understood deployment options  
+ Ready to share with the world  
 
 ---
 
@@ -248,17 +248,17 @@ Cloudflare Dashboard
 
 ---
 
-## Congratulations! 🎉
+## Congratulations! 
 
 You've successfully:
 
-✅ Created a Cloudflare account  
-✅ Built multiple Workers  
-✅ Stored images with R2  
-✅ Created a database with D1  
-✅ Built a photo gallery  
-✅ Added AI chatbot  
-✅ Deployed to the internet  
+ Created a Cloudflare account  
+ Built multiple Workers  
+ Stored images with R2  
+ Created a database with D1  
+ Built a photo gallery  
+ Added AI chatbot  
+ Deployed to the internet  
 
 **You're now a Cloudflare Workers developer!**
 
@@ -283,4 +283,4 @@ Have questions or feedback about this workshop?
 
 ---
 
-**Thank you for completing the Cloudflare Workers Dashboard Workshop!** 🚀
+**Thank you for completing the Cloudflare Workers Dashboard Workshop!** 
