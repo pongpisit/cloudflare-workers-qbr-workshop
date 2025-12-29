@@ -156,11 +156,9 @@ The variable name you chose (`mybucket`) becomes `env.mybucket` in your Worker c
 
 ## Step 6: Add Upload Button to Your Profile Page
 
-Now that R2 is bound to your Worker, let's add an upload button to your profile page. Update your Worker code to include the upload functionality:
+Now that R2 is bound to your Worker, let's add an upload button to your profile page. Copy and paste this complete code into your Worker:
 
-### Add CSS for Upload Section
-
-Add this CSS to your Worker code's `<style>` section:
+**Copy this CSS and add it to your `<style>` section:**
 
 ```css
 .upload-section {
@@ -205,9 +203,7 @@ Add this CSS to your Worker code's `<style>` section:
 }
 ```
 
-### Add Upload HTML
-
-Add this HTML to your profile page (after the social links section):
+**Copy this HTML and add it after the social links section in your profile page:**
 
 ```html
 <div class="upload-section">
@@ -220,9 +216,7 @@ Add this HTML to your profile page (after the social links section):
 </div>
 ```
 
-### Add Upload JavaScript
-
-Add this JavaScript code to handle file uploads to R2:
+**Copy this JavaScript and add it at the end of your profile page HTML (before closing `</body>`):**
 
 ```javascript
 <script>
@@ -246,7 +240,6 @@ Add this JavaScript code to handle file uploads to R2:
         const data = await response.json();
         statusDiv.textContent = 'Upload successful! Refresh to see your new profile picture.';
         
-        // Update avatar image
         const avatar = document.querySelector('.avatar');
         if (avatar) {
           const img = avatar.querySelector('img');
@@ -267,9 +260,7 @@ Add this JavaScript code to handle file uploads to R2:
 </script>
 ```
 
-### Add Upload Endpoint to Your Worker
-
-Add this route to your Worker to handle file uploads:
+**Copy this code and add it to your Worker's main fetch function (before the 404 response):**
 
 ```javascript
 if (path === '/upload' && request.method === 'POST') {
@@ -281,11 +272,9 @@ if (path === '/upload' && request.method === 'POST') {
   }
 
   try {
-    // Upload to R2
     const filename = `profile-${Date.now()}-${file.name}`;
     await env.mybucket.put(filename, file);
     
-    // Return the public URL
     const publicUrl = `https://pub-xxxxxxxxxxxxxxxx.r2.dev/${filename}`;
     return new Response(JSON.stringify({ url: publicUrl }), {
       headers: { 'Content-Type': 'application/json' }
@@ -296,7 +285,7 @@ if (path === '/upload' && request.method === 'POST') {
 }
 ```
 
-Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL.
+**Important:** Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL from Step 4.
 
 ---
 
