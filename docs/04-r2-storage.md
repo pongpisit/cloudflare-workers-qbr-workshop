@@ -154,6 +154,162 @@ The variable name you chose (`mybucket`) becomes `env.mybucket` in your Worker c
 
 ---
 
+## Step 6: Add Upload Button to Your Profile Page
+
+Now that R2 is bound to your Worker, let's add an upload button to your profile page. Update your Worker code to include the upload functionality:
+
+### Add CSS for Upload Section
+
+Add this CSS to your Worker code's `<style>` section:
+
+```css
+.upload-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.upload-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.upload-input {
+  display: none;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 102, 51, 0.3);
+}
+
+.upload-status {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #666;
+}
+```
+
+### Add Upload HTML
+
+Add this HTML to your profile page (after the social links section):
+
+```html
+<div class="upload-section">
+  <h3>Upload Profile Picture</h3>
+  <input type="file" id="profileUpload" class="upload-input" accept="image/*">
+  <button class="upload-btn" onclick="document.getElementById('profileUpload').click()">
+    Choose Image
+  </button>
+  <div class="upload-status" id="uploadStatus"></div>
+</div>
+```
+
+### Add Upload JavaScript
+
+Add this JavaScript code to handle file uploads to R2:
+
+```javascript
+<script>
+  document.getElementById('profileUpload').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const statusDiv = document.getElementById('uploadStatus');
+    statusDiv.textContent = 'Uploading...';
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        statusDiv.textContent = 'Upload successful! Refresh to see your new profile picture.';
+        
+        // Update avatar image
+        const avatar = document.querySelector('.avatar');
+        if (avatar) {
+          const img = avatar.querySelector('img');
+          if (img) {
+            img.src = data.url;
+          } else {
+            avatar.innerHTML = `<img src="${data.url}" alt="Profile Picture">`;
+          }
+        }
+      } else {
+        statusDiv.textContent = 'Upload failed. Please try again.';
+      }
+    } catch (error) {
+      statusDiv.textContent = 'Error uploading file.';
+      console.error('Upload error:', error);
+    }
+  });
+</script>
+```
+
+### Add Upload Endpoint to Your Worker
+
+Add this route to your Worker to handle file uploads:
+
+```javascript
+if (path === '/upload' && request.method === 'POST') {
+  const formData = await request.formData();
+  const file = formData.get('file');
+  
+  if (!file) {
+    return new Response(JSON.stringify({ error: 'No file provided' }), { status: 400 });
+  }
+
+  try {
+    // Upload to R2
+    const filename = `profile-${Date.now()}-${file.name}`;
+    await env.mybucket.put(filename, file);
+    
+    // Return the public URL
+    const publicUrl = `https://pub-xxxxxxxxxxxxxxxx.r2.dev/${filename}`;
+    return new Response(JSON.stringify({ url: publicUrl }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Upload failed' }), { status: 500 });
+  }
+}
+```
+
+Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL.
+
+---
+
+## Step 7: Test the Upload Feature
+
+1. Go to your profile page
+2. Click the "Choose Image" button
+3. Select an image from your device
+4. The image will upload to R2 and display on your profile
+5. Refresh the page to see the new profile picture
+
+---
+
 ## Step 8: Display Your Profile Picture on Your Profile Page
 
 Now let's update Module 3 to display your R2 profile picture:

@@ -181,47 +181,6 @@ export default {
               transform: scale(1.1);
             }
 
-            .upload-section {
-              margin-top: 30px;
-              padding: 20px;
-              background: #f9f9f9;
-              border-radius: 10px;
-              text-align: center;
-            }
-
-            .upload-section h3 {
-              margin-bottom: 15px;
-              color: #333;
-              font-size: 1.1em;
-            }
-
-            .upload-input {
-              display: none;
-            }
-
-            .upload-btn {
-              display: inline-block;
-              padding: 10px 20px;
-              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
-              color: white;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-              font-weight: 600;
-              transition: transform 0.2s, box-shadow 0.2s;
-            }
-
-            .upload-btn:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 5px 15px rgba(255, 102, 51, 0.3);
-            }
-
-            .upload-status {
-              margin-top: 10px;
-              font-size: 0.9em;
-              color: #666;
-            }
-
             .footer {
               text-align: center;
               padding: 20px;
@@ -272,63 +231,11 @@ export default {
                 <a href="#" class="social-icon" title="LinkedIn">IN</a>
                 <a href="#" class="social-icon" title="Email">@</a>
               </div>
-
-              <div class="upload-section">
-                <h3>Upload Profile Picture</h3>
-                <input type="file" id="profileUpload" class="upload-input" accept="image/*">
-                <button class="upload-btn" onclick="document.getElementById('profileUpload').click()">
-                  Choose Image
-                </button>
-                <div class="upload-status" id="uploadStatus"></div>
-              </div>
             </div>
 
             <div class="footer">
               Built with Cloudflare Workers 
             </div>
-          </div>
-
-          <script>
-            document.getElementById('profileUpload').addEventListener('change', async (e) => {
-              const file = e.target.files[0];
-              if (!file) return;
-
-              const statusDiv = document.getElementById('uploadStatus');
-              statusDiv.textContent = 'Uploading...';
-
-              try {
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const response = await fetch('/upload', {
-                  method: 'POST',
-                  body: formData
-                });
-
-                if (response.ok) {
-                  const data = await response.json();
-                  statusDiv.textContent = 'Upload successful! Refresh to see your new profile picture.';
-                  
-                  // Update avatar image
-                  const avatar = document.querySelector('.avatar');
-                  if (avatar) {
-                    const img = avatar.querySelector('img');
-                    if (img) {
-                      img.src = data.url;
-                    } else {
-                      avatar.innerHTML = `<img src="${data.url}" alt="Profile Picture">`;
-                    }
-                  }
-                } else {
-                  statusDiv.textContent = 'Upload failed. Please try again.';
-                }
-              } catch (error) {
-                statusDiv.textContent = 'Error uploading file.';
-                console.error('Upload error:', error);
-              }
-            });
-          </script>
-          </div>
         </body>
         </html>
       `, {
