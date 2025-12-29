@@ -1,6 +1,6 @@
 # Module 2: Hello World Worker (25 minutes)
 
-Create a Worker that returns HTML, JSON, and handles different routes.
+Modify your Worker to return HTML, JSON, and handle different routes.
 
 ---
 
@@ -9,17 +9,17 @@ Create a Worker that returns HTML, JSON, and handles different routes.
 - Return HTML from a Worker
 - Return JSON responses
 - Handle different URL routes
-- Use the Worker editor
+- Edit and deploy Worker code
 
 ---
 
-## Step 1: Create Your Worker
+## Step 1: Open Your Worker for Editing
 
 1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
 2. Click **Build** → **Compute & AI** → **Workers & Pages**
-3. Click the blue **Create application** button (top right)
-4. In the "Create a Worker" dialog, click **Start with Hello World!**
-5. You'll see the code editor with a default "Hello World" example
+3. Click on your Worker name (created in Module 1)
+4. Click the **Edit code** button (top right)
+5. You'll see the code editor with your current Worker code
 
 ---
 
@@ -214,12 +214,16 @@ export default {
 
 ---
 
-## Step 5: Save and Test
+## Step 5: Save and Deploy
 
-1. Click **Save and Deploy**
-2. Wait for deployment
-3. Test the different routes:
+1. Click **Save and Deploy** button
+2. You'll see the deployment dialog
+3. Click the blue **Deploy** button
+4. Wait for deployment to complete (usually 10-30 seconds)
+5. Test the different routes:
    - `https://[your-worker].workers.dev/` - Home page
+   - `https://[your-worker].workers.dev/api/hello` - JSON response
+   - `https://[your-worker].workers.dev/about` - About page
 
 ---
 
