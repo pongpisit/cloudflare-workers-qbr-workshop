@@ -25,37 +25,80 @@ Create an R2 bucket, upload your profile picture, and display it on your profile
 ## Step 2: Create an R2 Bucket
 
 1. Click **Create bucket** button
-2. Enter a bucket name (e.g., `my-photos`, `workshop-images`)
-   - Must be lowercase
-   - Can contain hyphens
-   - Must be globally unique
-3. Choose a region (pick the closest to you)
-4. Click **Create bucket**
-5. Wait for the bucket to be created (usually 10-30 seconds)
+2. Fill in the bucket creation form:
+
+### Bucket Name
+- Enter a name (e.g., `my-photos`, `workshop-images`, `mybucket`)
+- Must be lowercase
+- Can contain hyphens
+- Must be globally unique
+- Bucket name is permanent
+
+### Location
+- **Automatic** (recommended) - Cloudflare chooses the best location
+  - Provides a location hint (e.g., Asia-Pacific for users in Asia)
+- **Specify jurisdiction** - Choose a specific region for data residency
+
+### Default Storage Class
+- **Standard** (recommended) - For objects accessed at least once a month
+- **Infrequent Access** - For objects accessed less than once a month
+
+### Public Access
+- By default, buckets are **private**
+- You can make them public later in Settings if needed
+
+3. Click **Create bucket**
+4. Wait for the bucket to be created (usually 10-30 seconds)
 
 ---
 
-## Step 3: Configure Public Access
+## Step 3: Navigate Your Bucket
 
-By default, R2 buckets are private. Let's make it public:
+After creating your bucket, you'll see the bucket details page with three main tabs:
+
+### Objects Tab
+- Shows all files in your bucket
+- Empty when first created
+- Has an **Add directory** button to organize files
+- Shows upload area with "Drag and drop or select from computer"
+- Displays file list with Type, Storage Class, Size, and Modified date
+
+### Metrics Tab
+- Shows usage statistics
+- Class A Operations (uploads, deletes)
+- Class B Operations (downloads, list requests)
+- Bucket size information
+
+### Settings Tab
+- **General** section shows:
+  - Bucket name
+  - Created date
+  - Location (e.g., Asia-Pacific APAC)
+  - S3 API endpoint
+- **Custom Domains** - Expose bucket contents via custom domain
+- **Public Development URL** - Enable public access for testing
+- **R2 Data Catalog** - Add Apache Iceberg REST catalog
+- **CORS Policy** - Configure cross-origin requests
+- **Object Lifecycle Rules** - Auto-delete old files
+- **Bucket Lock Rules** - Prevent deletion
+- **Event Notifications** - Trigger actions on uploads
+- **On Demand Migration** - Migrate from other providers
+- **Default Storage Class** - Change storage tier
+- **Delete Bucket** - Remove the bucket
+
+---
+
+## Step 4: Configure Public Access
+
+By default, R2 buckets are private. To make your profile picture publicly accessible:
 
 1. Click on your bucket name
 2. Click **Settings** tab
-3. Scroll down to **Public access**
-4. Click **Allow public access**
-5. You'll see a confirmation dialog
-6. Click **Allow public access** again to confirm
+3. Find **Public Development URL** section
+4. Click **Enable** button
+5. Your bucket is now publicly accessible!
 
----
-
-## Step 4: Get Your R2 Public URL
-
-1. In the **Settings** tab, look for **Public access URL**
-2. You'll see something like:
-   ```
-   https://pub-xxxxxxxxxxxxxxxx.r2.dev
-   ```
-3. Copy this URL (you'll need it later)
+The public URL will be displayed (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
 
 ---
 
