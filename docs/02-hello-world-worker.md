@@ -106,7 +106,7 @@ Now let's add a `/api/hello` endpoint that returns JSON. Replace the code with:
 
 ```javascript
 export default {
-  fetch(request) {
+  async fetch(request) {
     const url = new URL(request.url);
     const path = url.pathname;
 
@@ -194,15 +194,34 @@ kex=${tlsCipher}`;
 
     // JSON API endpoint with user info
     if (path === '/api/hello') {
-      // Get user's IP and connection info from request headers
+      // Fetch trace data from /cdn-cgi/trace
+      const traceUrl = new URL(request.url);
+      traceUrl.pathname = '/cdn-cgi/trace';
+      
+      const traceResponse = await fetch(traceUrl.toString(), {
+        method: 'GET',
+        headers: request.headers
+      });
+      
+      const traceText = await traceResponse.text();
+      
+      // Parse trace data
+      const traceData = {};
+      traceText.split('\n').forEach(line => {
+        const [key, value] = line.split('=');
+        if (key && value) {
+          traceData[key] = value;
+        }
+      });
+      
+      // Get user's IP and connection info
       const clientIP = request.headers.get('cf-connecting-ip') || 'Unknown';
       const country = request.headers.get('cf-ipcountry') || 'Unknown';
       const userAgent = request.headers.get('user-agent') || 'Unknown';
-      const tlsVersion = request.headers.get('cf-tls-version') || 'Unknown';
-      const tlsCipher = request.headers.get('cf-tls-cipher') || 'Unknown';
-      const ray = request.headers.get('cf-ray') || 'Unknown';
-      const colo = ray.split('-')[1] || 'Unknown';
-      const warp = request.headers.get('cf-warp-tag-ids') ? 'on' : 'off';
+      const tlsVersion = traceData.tls || 'Unknown';
+      const tlsCipher = traceData.kex || 'Unknown';
+      const colo = traceData.colo || 'Unknown';
+      const warp = traceData.warp || 'off';
       const asn = request.headers.get('cf-asn') || 'Unknown';
       
       // Check for PQC support (Post-Quantum Cryptography)
@@ -224,7 +243,7 @@ kex=${tlsCipher}`;
             warpEnabled: warp
           }
         },
-        note: 'Visit /cdn-cgi/trace to see raw Cloudflare trace data'
+        cloudflareTrace: traceData
       }), {
         headers: { 'Content-Type': 'application/json' }
       });
