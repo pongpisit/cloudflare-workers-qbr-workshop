@@ -157,6 +157,41 @@ export default {
       });
     }
 
+    // Cloudflare trace endpoint - shows raw Cloudflare connection info
+    if (path === '/cdn-cgi/trace') {
+      const clientIP = request.headers.get('cf-connecting-ip') || 'Unknown';
+      const country = request.headers.get('cf-ipcountry') || 'Unknown';
+      const asn = request.headers.get('cf-asn') || 'Unknown';
+      const ray = request.headers.get('cf-ray') || 'Unknown';
+      const colo = ray.split('-')[1] || 'Unknown';
+      const tlsVersion = request.headers.get('cf-tls-version') || 'Unknown';
+      const tlsCipher = request.headers.get('cf-tls-cipher') || 'Unknown';
+      const httpVersion = request.headers.get('cf-http-version') || 'Unknown';
+      const userAgent = request.headers.get('user-agent') || 'Unknown';
+      const warp = request.headers.get('cf-warp-tag-ids') ? 'on' : 'off';
+      
+      const traceInfo = `fl=${ray}
+h=${request.headers.get('host') || 'Unknown'}
+ip=${clientIP}
+ts=${Math.floor(Date.now() / 1000)}.000
+visit_scheme=${request.url.split(':')[0]}
+uag=${userAgent}
+colo=${colo}
+sliver=none
+http=${httpVersion}
+loc=${country}
+tls=${tlsVersion}
+sni=encrypted
+warp=${warp}
+gateway=off
+rbi=off
+kex=${tlsCipher}`;
+      
+      return new Response(traceInfo, {
+        headers: { 'Content-Type': 'text/plain' }
+      });
+    }
+
     // JSON API endpoint with user info
     if (path === '/api/hello') {
       // Get user's IP and connection info from request headers
@@ -165,7 +200,8 @@ export default {
       const userAgent = request.headers.get('user-agent') || 'Unknown';
       const tlsVersion = request.headers.get('cf-tls-version') || 'Unknown';
       const tlsCipher = request.headers.get('cf-tls-cipher') || 'Unknown';
-      const colo = request.headers.get('cf-ray')?.split('-')[1] || 'Unknown';
+      const ray = request.headers.get('cf-ray') || 'Unknown';
+      const colo = ray.split('-')[1] || 'Unknown';
       const warp = request.headers.get('cf-warp-tag-ids') ? 'on' : 'off';
       const asn = request.headers.get('cf-asn') || 'Unknown';
       
@@ -187,7 +223,8 @@ export default {
             isPQCSupported: isPQCSupported,
             warpEnabled: warp
           }
-        }
+        },
+        note: 'Visit /cdn-cgi/trace to see raw Cloudflare trace data'
       }), {
         headers: { 'Content-Type': 'application/json' }
       });
