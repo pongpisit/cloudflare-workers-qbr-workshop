@@ -299,18 +299,6 @@ return new Response(JSON.stringify({
 
 ---
 
-## Step 7: Customize Your Profile
-
-Edit the HTML to add your own information:
-
-```javascript
-<h1> Your Name Here</h1>
-<p>Your bio or description</p>
-<p>Your location or role</p>
-```
-
----
-
 ## Key Takeaways
 
 [x] Created a Worker with multiple routes  
