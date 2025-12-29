@@ -157,12 +157,37 @@ export default {
       });
     }
 
-    // JSON API endpoint
+    // JSON API endpoint with user info
     if (path === '/api/hello') {
+      // Get user's IP and connection info from request headers
+      const clientIP = request.headers.get('cf-connecting-ip') || 'Unknown';
+      const country = request.headers.get('cf-ipcountry') || 'Unknown';
+      const userAgent = request.headers.get('user-agent') || 'Unknown';
+      const tlsVersion = request.headers.get('cf-tls-version') || 'Unknown';
+      const tlsCipher = request.headers.get('cf-tls-cipher') || 'Unknown';
+      const colo = request.headers.get('cf-ray')?.split('-')[1] || 'Unknown';
+      const warp = request.headers.get('cf-warp-tag-ids') ? 'on' : 'off';
+      const asn = request.headers.get('cf-asn') || 'Unknown';
+      
+      // Check for PQC support (Post-Quantum Cryptography)
+      const isPQCSupported = tlsCipher.includes('MLKEM') || tlsCipher.includes('X25519MLKEM');
+      
       return new Response(JSON.stringify({
         message: 'Hello from Cloudflare Workers!',
         timestamp: new Date().toISOString(),
-        location: 'Edge Network'
+        userConnection: {
+          ip: clientIP,
+          country: country,
+          asn: asn,
+          colo: colo,
+          userAgent: userAgent,
+          security: {
+            tlsVersion: tlsVersion,
+            tlsCipher: tlsCipher,
+            isPQCSupported: isPQCSupported,
+            warpEnabled: warp
+          }
+        }
       }), {
         headers: { 'Content-Type': 'application/json' }
       });
