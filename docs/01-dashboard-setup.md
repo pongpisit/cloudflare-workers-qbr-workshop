@@ -80,11 +80,11 @@ Build
 
 ---
 
-## Step 4: Navigate to Workers
+## Step 4: Navigate to Workers & Pages
 
-1. In the left sidebar, click **Workers & Pages**
-2. Click **Workers** (or **Overview** if it shows)
-3. You should see a button that says **Create application** or **Create a Service**
+1. In the left sidebar, click **Build** → **Compute & AI** → **Workers & Pages**
+2. You'll see the Workers & Pages overview page
+3. Click the blue **Create application** button in the top right
 
 ---
 
