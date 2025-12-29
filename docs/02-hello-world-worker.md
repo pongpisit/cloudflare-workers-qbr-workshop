@@ -45,7 +45,7 @@ export default {
               max-width: 600px;
               margin: 50px auto;
               padding: 20px;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
               color: white;
             }
             h1 { font-size: 2.5em; margin: 0; }
@@ -56,7 +56,7 @@ export default {
               margin: 10px 10px 10px 0;
               padding: 10px 20px;
               background: white;
-              color: #667eea;
+              color: #FF6633;
               text-decoration: none;
               border-radius: 5px;
               font-weight: bold;
@@ -123,7 +123,7 @@ export default {
               max-width: 600px;
               margin: 50px auto;
               padding: 20px;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
               color: white;
             }
             h1 { font-size: 2.5em; margin: 0; }
@@ -134,7 +134,7 @@ export default {
               margin: 10px 10px 10px 0;
               padding: 10px 20px;
               background: white;
-              color: #667eea;
+              color: #FF6633;
               text-decoration: none;
               border-radius: 5px;
               font-weight: bold;
