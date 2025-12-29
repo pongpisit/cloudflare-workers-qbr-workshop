@@ -220,8 +220,6 @@ export default {
 2. Wait for deployment
 3. Test the different routes:
    - `https://[your-worker].workers.dev/` - Home page
-   - `https://[your-worker].workers.dev/api/hello` - JSON response
-   - `https://[your-worker].workers.dev/about` - About page
 
 ---
 

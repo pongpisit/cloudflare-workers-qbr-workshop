@@ -164,15 +164,38 @@ The Worker editor has:
 
 ---
 
-## Step 9: Test Your Worker
+## Step 9: Explore the Worker Project Dashboard
 
-1. Click the URL that appears after deployment
+After deployment, you'll see the Worker project dashboard with several tabs:
+
+### Dashboard Tabs
+
+| Tab | What It Shows |
+|-----|---------------|
+| **Overview** | Worker status, metrics, and quick actions |
+| **Metrics** | Requests, errors, and CPU time (Last 26 hours) |
+| **Deployments** | Deployment history and versions |
+| **Bindings** | Connected resources (D1, R2, KV, etc.) |
+| **Observability** | Logs and monitoring data |
+| **Settings** | Worker configuration and routes |
+
+### Key Buttons
+
+- **Edit code** - Modify your Worker code
+- **Visit** - Open your Worker in a browser
+- **Domains & Routes** - Configure custom domains
+
+---
+
+## Step 10: Test Your Worker
+
+1. Click the blue **Visit** button (top right)
 2. You should see "Hello World" in your browser
 3. Your first Worker is live! 🎉
 
 ---
 
-## Step 10: Understand Worker URLs
+## Step 11: Understand Worker URLs
 
 Your Worker gets a unique URL:
 

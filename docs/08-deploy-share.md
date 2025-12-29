@@ -19,6 +19,18 @@ Great news: Your Worker is **already deployed to the internet** and live!
 
 Every time you click **Save and Deploy**, your code goes live immediately.
 
+### Access Your Worker Dashboard
+
+1. Go to **Build** → **Compute & AI** → **Workers & Pages**
+2. Click on your Worker name
+3. You'll see the Worker project dashboard with tabs:
+   - **Overview** - Status and metrics
+   - **Metrics** - Requests, errors, CPU time
+   - **Deployments** - Version history
+   - **Bindings** - Connected resources (D1, R2, KV)
+   - **Observability** - Logs and monitoring
+   - **Settings** - Configuration and routes
+
 ---
 
 ## Step 2: Share Your Worker URL
