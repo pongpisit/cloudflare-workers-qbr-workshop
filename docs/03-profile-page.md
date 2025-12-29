@@ -48,7 +48,7 @@ export default {
 
             body {
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
               min-height: 100vh;
               display: flex;
               align-items: center;
@@ -66,7 +66,7 @@ export default {
             }
 
             .header {
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
               padding: 40px 20px;
               text-align: center;
               color: white;
@@ -121,7 +121,7 @@ export default {
             .link-btn {
               display: block;
               padding: 15px 20px;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
               color: white;
               text-decoration: none;
               border-radius: 10px;
@@ -135,7 +135,7 @@ export default {
 
             .link-btn:hover {
               transform: translateY(-2px);
-              box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+              box-shadow: 0 10px 20px rgba(246, 130, 31, 0.3);
             }
 
             .link-btn:active {
