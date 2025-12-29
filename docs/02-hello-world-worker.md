@@ -89,9 +89,14 @@ export default {
 ## Step 3: Save and Deploy
 
 1. Click **Save and Deploy** button
-2. Wait for deployment (10-30 seconds)
-3. Click the Worker URL to test
-4. You should see your styled profile page
+2. You'll see the deployment dialog showing:
+   - Worker name (auto-generated)
+   - Code preview
+3. Click the blue **Deploy** button
+4. Wait for deployment to complete (usually 10-30 seconds)
+5. You'll see a success message with your Worker URL
+6. Click the Worker URL to test
+7. You should see your styled profile page
 
 ---
 

@@ -154,10 +154,13 @@ The Worker editor has:
 
 ## Step 8: Deploy Your First Worker
 
-1. The default code is already there (Hello World)
-2. Click **Save and Deploy** button
-3. Wait for the deployment to complete (usually 10-30 seconds)
-4. You'll see a success message with your Worker URL
+1. After clicking "Start with Hello World!", you'll see the "Deploy Hello World" dialog
+2. The dialog shows:
+   - **Worker name** - Auto-generated name (e.g., `broad-frost-227d`)
+   - **Worker preview** - Shows the default Hello World code
+3. Click the blue **Deploy** button (bottom right)
+4. Wait for the deployment to complete (usually 10-30 seconds)
+5. You'll see a success message with your Worker URL
 
 ---
 
