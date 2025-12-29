@@ -243,14 +243,14 @@ export default {
           <title>Portfolio</title>
           <style>
             body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
-            h1 { color: #667eea; }
-            a { color: #667eea; text-decoration: none; }
+            h1 { color: #FF6633; }
+            a { color: #FF6633; text-decoration: none; }
           </style>
         </head>
         <body>
           <h1> Portfolio</h1>
           <p>My work and projects showcase.</p>
-          <p><a href="/">← Back to Profile</a></p>
+          <p><a href="/">Back to Profile</a></p>
         </body>
         </html>
       `, {
@@ -266,14 +266,14 @@ export default {
           <title>Projects</title>
           <style>
             body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
-            h1 { color: #667eea; }
-            a { color: #667eea; text-decoration: none; }
+            h1 { color: #FF6633; }
+            a { color: #FF6633; text-decoration: none; }
           </style>
         </head>
         <body>
           <h1> Projects</h1>
           <p>Check out my latest projects built with Cloudflare Workers.</p>
-          <p><a href="/">← Back to Profile</a></p>
+          <p><a href="/">Back to Profile</a></p>
         </body>
         </html>
       `, {
@@ -289,14 +289,14 @@ export default {
           <title>Blog</title>
           <style>
             body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
-            h1 { color: #667eea; }
-            a { color: #667eea; text-decoration: none; }
+            h1 { color: #FF6633; }
+            a { color: #FF6633; text-decoration: none; }
           </style>
         </head>
         <body>
           <h1> Blog</h1>
           <p>Articles about web development and Cloudflare.</p>
-          <p><a href="/">← Back to Profile</a></p>
+          <p><a href="/">Back to Profile</a></p>
         </body>
         </html>
       `, {
@@ -312,15 +312,15 @@ export default {
           <title>Contact</title>
           <style>
             body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
-            h1 { color: #667eea; }
-            a { color: #667eea; text-decoration: none; }
+            h1 { color: #FF6633; }
+            a { color: #FF6633; text-decoration: none; }
           </style>
         </head>
         <body>
           <h1> Contact Me</h1>
           <p>Get in touch with me for collaborations or inquiries.</p>
           <p>Email: your.email@example.com</p>
-          <p><a href="/">← Back to Profile</a></p>
+          <p><a href="/">Back to Profile</a></p>
         </body>
         </html>
       `, {

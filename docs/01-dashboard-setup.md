@@ -114,7 +114,7 @@ The Dashboard has these main areas:
 3. You'll see the "Create a Worker" dialog with options:
    - Continue with GitHub
    - Connect GitLab
-   - **Start with Hello World!** ← Click this one
+   - **Start with Hello World!** (Click this one)
    - Select a template
    - Upload your static files
 4. Click **Start with Hello World!**

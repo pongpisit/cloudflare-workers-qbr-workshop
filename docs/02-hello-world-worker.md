@@ -240,7 +240,7 @@ kex=${tlsCipher}`;
             <li>Handling different routes</li>
             <li>Styling with CSS</li>
           </ul>
-          <p><a href="/">← Back to Home</a></p>
+          <p><a href="/">Back to Home</a></p>
         </body>
         </html>
       `, {
