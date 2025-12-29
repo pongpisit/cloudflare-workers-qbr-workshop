@@ -156,136 +156,334 @@ The variable name you chose (`mybucket`) becomes `env.mybucket` in your Worker c
 
 ## Step 6: Add Upload Button to Your Profile Page
 
-Now that R2 is bound to your Worker, let's add an upload button to your profile page. Copy and paste this complete code into your Worker:
-
-**Copy this CSS and add it to your `<style>` section:**
-
-```css
-.upload-section {
-  margin-top: 30px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.upload-section h3 {
-  margin-bottom: 15px;
-  color: #333;
-  font-size: 1.1em;
-}
-
-.upload-input {
-  display: none;
-}
-
-.upload-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.upload-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 102, 51, 0.3);
-}
-
-.upload-status {
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #666;
-}
-```
-
-**Copy this HTML and add it after the social links section in your profile page:**
-
-```html
-<div class="upload-section">
-  <h3>Upload Profile Picture</h3>
-  <input type="file" id="profileUpload" class="upload-input" accept="image/*">
-  <button class="upload-btn" onclick="document.getElementById('profileUpload').click()">
-    Choose Image
-  </button>
-  <div class="upload-status" id="uploadStatus"></div>
-</div>
-```
-
-**Copy this JavaScript and add it at the end of your profile page HTML (before closing `</body>`):**
+Now that R2 is bound to your Worker, copy and paste this complete code into your Worker. Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL from Step 4.
 
 ```javascript
-<script>
-  document.getElementById('profileUpload').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    const path = url.pathname;
 
-    const statusDiv = document.getElementById('uploadStatus');
-    statusDiv.textContent = 'Uploading...';
+    if (path === '/') {
+      return new Response(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>My Profile</title>
+          <style>
+            * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+            }
 
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
+            body {
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+              min-height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 20px;
+            }
 
-      const response = await fetch('/upload', {
-        method: 'POST',
-        body: formData
+            .container {
+              background: white;
+              border-radius: 20px;
+              box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+              max-width: 500px;
+              width: 100%;
+              overflow: hidden;
+            }
+
+            .header {
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+              padding: 40px 20px;
+              text-align: center;
+              color: white;
+            }
+
+            .avatar {
+              width: 120px;
+              height: 120px;
+              border-radius: 50%;
+              background: white;
+              margin: 0 auto 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 60px;
+              box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+              overflow: hidden;
+              object-fit: cover;
+            }
+
+            .avatar img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+
+            .name {
+              font-size: 2em;
+              font-weight: bold;
+              margin-bottom: 10px;
+            }
+
+            .title {
+              font-size: 1.1em;
+              opacity: 0.9;
+              margin-bottom: 5px;
+            }
+
+            .location {
+              font-size: 0.95em;
+              opacity: 0.8;
+            }
+
+            .content {
+              padding: 40px 20px;
+            }
+
+            .bio {
+              color: #333;
+              line-height: 1.6;
+              margin-bottom: 30px;
+              text-align: center;
+            }
+
+            .links {
+              display: grid;
+              gap: 12px;
+            }
+
+            .link-btn {
+              display: block;
+              padding: 15px 20px;
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+              color: white;
+              text-decoration: none;
+              border-radius: 10px;
+              text-align: center;
+              font-weight: 600;
+              transition: transform 0.2s, box-shadow 0.2s;
+              border: none;
+              cursor: pointer;
+              font-size: 1em;
+            }
+
+            .link-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 10px 20px rgba(246, 130, 31, 0.3);
+            }
+
+            .link-btn:active {
+              transform: translateY(0);
+            }
+
+            .social {
+              display: flex;
+              justify-content: center;
+              gap: 15px;
+              margin-top: 30px;
+              padding-top: 30px;
+              border-top: 1px solid #eee;
+            }
+
+            .social-icon {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              background: #f0f0f0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-decoration: none;
+              color: #667eea;
+              font-size: 1.2em;
+              transition: all 0.2s;
+            }
+
+            .social-icon:hover {
+              background: #667eea;
+              color: white;
+              transform: scale(1.1);
+            }
+
+            .upload-section {
+              margin-top: 30px;
+              padding: 20px;
+              background: #f9f9f9;
+              border-radius: 10px;
+              text-align: center;
+            }
+
+            .upload-section h3 {
+              margin-bottom: 15px;
+              color: #333;
+              font-size: 1.1em;
+            }
+
+            .upload-input {
+              display: none;
+            }
+
+            .upload-btn {
+              display: inline-block;
+              padding: 10px 20px;
+              background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+              color: white;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              font-weight: 600;
+              transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+            .upload-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 5px 15px rgba(255, 102, 51, 0.3);
+            }
+
+            .upload-status {
+              margin-top: 10px;
+              font-size: 0.9em;
+              color: #666;
+            }
+
+            .footer {
+              text-align: center;
+              padding: 20px;
+              background: #f9f9f9;
+              color: #999;
+              font-size: 0.9em;
+            }
+
+            @media (max-width: 600px) {
+              .header {
+                padding: 30px 15px;
+              }
+              .content {
+                padding: 30px 15px;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <div class="avatar">[Profile]</div>
+              <div class="name">Your Name</div>
+              <div class="title">Full Stack Developer</div>
+              <div class="location">Your City, Country</div>
+            </div>
+
+            <div class="content">
+              <div class="bio">
+                <p>Welcome to my profile! I'm passionate about building amazing web applications with Cloudflare Workers.</p>
+              </div>
+
+              <div class="links">
+                <a href="/portfolio" class="link-btn">Portfolio</a>
+                <a href="/projects" class="link-btn">Projects</a>
+                <a href="/blog" class="link-btn">Blog</a>
+                <a href="/contact" class="link-btn">Contact Me</a>
+              </div>
+
+              <div class="social">
+                <a href="#" class="social-icon" title="GitHub">GH</a>
+                <a href="#" class="social-icon" title="Twitter">TW</a>
+                <a href="#" class="social-icon" title="LinkedIn">IN</a>
+                <a href="#" class="social-icon" title="Instagram">IG</a>
+              </div>
+
+              <div class="upload-section">
+                <h3>Upload Profile Picture</h3>
+                <input type="file" id="profileUpload" class="upload-input" accept="image/*">
+                <button class="upload-btn" onclick="document.getElementById('profileUpload').click()">
+                  Choose Image
+                </button>
+                <div class="upload-status" id="uploadStatus"></div>
+              </div>
+            </div>
+
+            <div class="footer">
+              Built with Cloudflare Workers
+            </div>
+          </div>
+
+          <script>
+            document.getElementById('profileUpload').addEventListener('change', async (e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+
+              const statusDiv = document.getElementById('uploadStatus');
+              statusDiv.textContent = 'Uploading...';
+
+              try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('/upload', {
+                  method: 'POST',
+                  body: formData
+                });
+
+                if (response.ok) {
+                  const data = await response.json();
+                  statusDiv.textContent = 'Upload successful! Refresh to see your new profile picture.';
+                  
+                  const avatar = document.querySelector('.avatar');
+                  if (avatar) {
+                    const img = avatar.querySelector('img');
+                    if (img) {
+                      img.src = data.url;
+                    } else {
+                      avatar.innerHTML = '<img src="' + data.url + '" alt="Profile Picture">';
+                    }
+                  }
+                } else {
+                  statusDiv.textContent = 'Upload failed. Please try again.';
+                }
+              } catch (error) {
+                statusDiv.textContent = 'Error uploading file.';
+                console.error('Upload error:', error);
+              }
+            });
+          </script>
+        </body>
+        </html>
+      `, {
+        headers: { 'Content-Type': 'text/html' }
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        statusDiv.textContent = 'Upload successful! Refresh to see your new profile picture.';
-        
-        const avatar = document.querySelector('.avatar');
-        if (avatar) {
-          const img = avatar.querySelector('img');
-          if (img) {
-            img.src = data.url;
-          } else {
-            avatar.innerHTML = `<img src="${data.url}" alt="Profile Picture">`;
-          }
-        }
-      } else {
-        statusDiv.textContent = 'Upload failed. Please try again.';
-      }
-    } catch (error) {
-      statusDiv.textContent = 'Error uploading file.';
-      console.error('Upload error:', error);
     }
-  });
-</script>
-```
 
-**Copy this code and add it to your Worker's main fetch function (before the 404 response):**
+    if (path === '/upload' && request.method === 'POST') {
+      const formData = await request.formData();
+      const file = formData.get('file');
+      
+      if (!file) {
+        return new Response(JSON.stringify({ error: 'No file provided' }), { status: 400 });
+      }
 
-```javascript
-if (path === '/upload' && request.method === 'POST') {
-  const formData = await request.formData();
-  const file = formData.get('file');
-  
-  if (!file) {
-    return new Response(JSON.stringify({ error: 'No file provided' }), { status: 400 });
+      try {
+        const filename = 'profile-' + Date.now() + '-' + file.name;
+        await env.mybucket.put(filename, file);
+        
+        const publicUrl = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev/' + filename;
+        return new Response(JSON.stringify({ url: publicUrl }), {
+          headers: { 'Content-Type': 'application/json' }
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: 'Upload failed' }), { status: 500 });
+      }
+    }
+
+    return new Response('Page not found', { status: 404 });
   }
-
-  try {
-    const filename = `profile-${Date.now()}-${file.name}`;
-    await env.mybucket.put(filename, file);
-    
-    const publicUrl = `https://pub-xxxxxxxxxxxxxxxx.r2.dev/${filename}`;
-    return new Response(JSON.stringify({ url: publicUrl }), {
-      headers: { 'Content-Type': 'application/json' }
-    });
-  } catch (error) {
-    return new Response(JSON.stringify({ error: 'Upload failed' }), { status: 500 });
-  }
-}
+};
 ```
-
-**Important:** Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL from Step 4.
 
 ---
 
