@@ -13,12 +13,12 @@ Create a Worker that returns HTML, JSON, and handles different routes.
 
 ---
 
-## Step 1: Open Your Worker
+## Step 1: Create Your Worker
 
 1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
 2. Click **Build** → **Compute & AI** → **Workers & Pages**
-3. Click the blue **Create application** button
-4. Click **Create a Worker** (not Pages)
+3. Click the blue **Create application** button (top right)
+4. In the "Create a Worker" dialog, click **Start with Hello World!**
 5. You'll see the code editor with a default "Hello World" example
 
 ---

@@ -109,10 +109,15 @@ The Dashboard has these main areas:
 
 ## Step 6: Create Your First Worker
 
-1. Click **Workers & Pages** in the left sidebar
-2. Click **Workers** tab
-3. Click **Create application** button
-4. Click **Create a Worker** (not Pages)
+1. Click **Build** → **Compute & AI** → **Workers & Pages**
+2. Click the blue **Create application** button (top right)
+3. You'll see the "Create a Worker" dialog with options:
+   - Continue with GitHub
+   - Connect GitLab
+   - **Start with Hello World!** ← Click this one
+   - Select a template
+   - Upload your static files
+4. Click **Start with Hello World!**
 5. You'll see a code editor with a default "Hello World" example
 
 ---
