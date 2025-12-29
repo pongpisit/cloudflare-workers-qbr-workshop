@@ -1,6 +1,6 @@
 # Module 3: Profile Page (30 minutes)
 
-Build a beautiful personal profile page with advanced styling and interactivity.
+Enhance your Worker with a beautiful personal profile page with advanced styling.
 
 ---
 
@@ -13,17 +13,18 @@ Build a beautiful personal profile page with advanced styling and interactivity.
 
 ---
 
-## Step 1: Open Your Worker
+## Step 1: Open Your Worker for Editing
 
 1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
-2. Click **Workers & Pages** → **Workers**
-3. Click your Worker to edit
+2. Click **Build** → **Compute & AI** → **Workers & Pages**
+3. Click on your Worker name (created in Module 2)
+4. Click the **Edit code** button
 
 ---
 
-## Step 2: Create a Profile Page Worker
+## Step 2: Update Your Worker with Profile Page
 
-Replace all code with this complete profile page:
+Replace all code with this enhanced profile page:
 
 ```javascript
 export default {
