@@ -102,41 +102,7 @@ The public URL will be displayed (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
 
 ---
 
-## Step 5: Upload Your Profile Picture
-
-Upload your profile picture from your laptop or mobile phone:
-
-### Option A: Upload via Dashboard (Easiest)
-
-1. Click the **Objects** tab in your bucket
-2. Click **Upload** button
-3. Select your profile picture from your device
-4. Wait for upload to complete
-5. You'll see the file listed
-
-### Option B: Drag and Drop
-
-1. Click the **Objects** tab
-2. Drag your profile picture from your computer/phone into the browser
-3. Drop it in the upload area
-4. File will upload automatically
-
-**Recommended:** Use a square image (e.g., 500x500px) for best results as a profile picture.
-
----
-
-## Step 6: Get Your Profile Picture URL
-
-1. In the **Objects** tab, find your uploaded profile picture
-2. Click on the file to see its details
-3. Copy the public URL (should look like):
-   ```
-   https://pub-xxxxxxxxxxxxxxxx.r2.dev/profile-picture.jpg
-   ```
-
----
-
-## Step 7: Bind Your Worker with R2 (Important!)
+## Step 5: Bind Your Worker with R2 (Important!)
 
 To access your R2 bucket from your Worker code, you need to create a binding. This allows your Worker to read and write files to R2.
 
