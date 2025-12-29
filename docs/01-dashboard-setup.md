@@ -118,41 +118,10 @@ The Dashboard has these main areas:
    - Select a template
    - Upload your static files
 4. Click **Start with Hello World!**
-5. You'll see a code editor with a default "Hello World" example
 
 ---
 
-## Step 7: Explore the Worker Editor
-
-The Worker editor has:
-
-```
-┌─────────────────────────────────────────┐
-│ File Name: index.js                     │
-├─────────────────────────────────────────┤
-│                                         │
-│  export default {                       │
-│    fetch(request) {                     │
-│      return new Response('Hello World') │
-│    }                                    │
-│  }                                      │
-│                                         │
-├─────────────────────────────────────────┤
-│ [Save and Deploy]  [Test]  [Settings]   │
-└─────────────────────────────────────────┘
-```
-
-### Key Buttons
-
-| Button | What It Does |
-|--------|-------------|
-| **Save and Deploy** | Save your code and deploy to the internet |
-| **Test** | Test your Worker locally |
-| **Settings** | Configure routes, environment variables, etc. |
-
----
-
-## Step 8: Deploy Your First Worker
+## Step 7: Deploy Your First Worker
 
 1. After clicking "Start with Hello World!", you'll see the "Deploy Hello World" dialog
 2. The dialog shows:
@@ -164,7 +133,7 @@ The Worker editor has:
 
 ---
 
-## Step 9: Explore the Worker Project Dashboard
+## Step 8: Explore the Worker Project Dashboard
 
 After deployment, you'll see the Worker project dashboard with several tabs:
 
@@ -187,7 +156,7 @@ After deployment, you'll see the Worker project dashboard with several tabs:
 
 ---
 
-## Step 10: Test Your Worker
+## Step 9: Test Your Worker
 
 1. Click the blue **Visit** button (top right)
 2. You should see "Hello World" in your browser
@@ -195,7 +164,7 @@ After deployment, you'll see the Worker project dashboard with several tabs:
 
 ---
 
-## Step 11: Understand Worker URLs
+## Step 10: Understand Worker URLs
 
 Your Worker gets a unique URL:
 
