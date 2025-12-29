@@ -93,7 +93,59 @@ Upload your profile picture from your laptop or mobile phone:
 
 ---
 
-## Step 7: Display Your Profile Picture on Your Profile Page
+## Step 7: Bind Your Worker with R2 (Important!)
+
+To access your R2 bucket from your Worker code, you need to create a binding. This allows your Worker to read and write files to R2.
+
+### Prerequisites
+- You must have created an R2 bucket (Step 2)
+- Your Worker must be deployed (Module 3)
+
+### Steps to Bind R2 to Your Worker
+
+1. Go to your Worker in the Dashboard:
+   - Click **Build** → **Compute & AI** → **Workers & Pages**
+   - Click on your Worker name
+
+2. Click the **Bindings** tab
+
+3. Click **Add binding** button
+
+4. In the "Add a binding" dialog:
+   - On the left, select **R2 Bucket** from the list
+   - On the right side, fill in:
+     - **Variable name**: `mybucket` (or your preferred name)
+     - **R2 bucket**: Select your bucket from the dropdown
+   - Click **Add Binding**
+
+5. Your R2 bucket is now bound to your Worker!
+
+### Using R2 in Your Worker Code
+
+Once bound, you can access your R2 bucket in your Worker code:
+
+```javascript
+export default {
+  async fetch(request, env) {
+    // Access your R2 bucket
+    const bucket = env.mybucket;
+    
+    // Example: Get a file
+    const file = await bucket.get('profile-picture.jpg');
+    
+    // Example: List files
+    const list = await bucket.list();
+    
+    return new Response('R2 is connected!');
+  }
+};
+```
+
+The variable name you chose (`mybucket`) becomes `env.mybucket` in your Worker code.
+
+---
+
+## Step 8: Display Your Profile Picture on Your Profile Page
 
 Now let's update Module 3 to display your R2 profile picture:
 
