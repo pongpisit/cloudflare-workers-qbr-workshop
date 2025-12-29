@@ -345,25 +345,55 @@ export default {
 
 ## Step 4: Customize Your Profile
 
-Edit these values in the code:
+Edit these values in the code to match your profile:
+
+### Profile Information
 
 ```javascript
-<div class="avatar">‍</div>           // Change emoji
-<div class="name">Your Name</div>       // Your name
-<div class="title">Full Stack Developer</div>  // Your title
-<div class="location"> Your City, Country</div>  // Your location
+<div class="avatar">[Profile]</div>
+<div class="name">Your Name</div>
+<div class="title">Your Job Title</div>
+<div class="location">Your City, Country</div>
 ```
+
+Replace with your actual information:
+- **[Profile]** - Keep as is or replace with initials (e.g., "JD" for John Doe)
+- **Your Name** - Your full name
+- **Your Job Title** - Your profession (e.g., "Full Stack Developer", "Product Manager", "Designer")
+- **Your City, Country** - Your location
+
+### Profile Bio
+
+```javascript
+<div class="bio">
+  <p>Welcome to my profile! I'm passionate about building amazing web applications with Cloudflare Workers.</p>
+</div>
+```
+
+Update the bio text to describe yourself and your interests.
 
 ---
 
-## Step 5: Add Your Links
+## Step 5: Add Your Social Media Links
 
-Update the social media links:
+Update the social media links section with your profiles:
 
 ```javascript
-<a href="https://github.com/yourname" class="social-icon"></a>
-<a href="https://twitter.com/yourname" class="social-icon"></a>
+<div class="social">
+  <a href="https://github.com/yourname" class="social-icon" title="GitHub">GH</a>
+  <a href="https://twitter.com/yourname" class="social-icon" title="Twitter">TW</a>
+  <a href="https://linkedin.com/in/yourname" class="social-icon" title="LinkedIn">IN</a>
+  <a href="https://instagram.com/yourname" class="social-icon" title="Instagram">IG</a>
+</div>
 ```
+
+Replace with your actual profiles:
+- **GitHub** - Your GitHub profile URL
+- **Twitter** - Your Twitter profile URL
+- **LinkedIn** - Your LinkedIn profile URL
+- **Instagram** - Your Instagram profile URL
+
+You can add or remove links as needed. Update the `href` with your actual profile URLs.
 
 ---
 
