@@ -200,6 +200,8 @@ kex=${tlsCipher}`;
       const userAgent = request.headers.get('user-agent') || 'Unknown';
       
       return new Response(JSON.stringify({
+        message: 'Hello from Cloudflare Workers!',
+        timestamp: new Date().toISOString(),
         ip: clientIP,
         location: location,
         userAgent: userAgent
