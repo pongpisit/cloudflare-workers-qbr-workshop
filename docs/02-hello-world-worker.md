@@ -194,56 +194,15 @@ kex=${tlsCipher}`;
 
     // JSON API endpoint with user info
     if (path === '/api/hello') {
-      // Fetch trace data from /cdn-cgi/trace
-      const traceUrl = new URL(request.url);
-      traceUrl.pathname = '/cdn-cgi/trace';
-      
-      const traceResponse = await fetch(traceUrl.toString(), {
-        method: 'GET',
-        headers: request.headers
-      });
-      
-      const traceText = await traceResponse.text();
-      
-      // Parse trace data
-      const traceData = {};
-      traceText.split('\n').forEach(line => {
-        const [key, value] = line.split('=');
-        if (key && value) {
-          traceData[key] = value;
-        }
-      });
-      
-      // Get user's IP and connection info
+      // Get user's IP, location, and user agent
       const clientIP = request.headers.get('cf-connecting-ip') || 'Unknown';
-      const country = request.headers.get('cf-ipcountry') || 'Unknown';
+      const location = request.headers.get('cf-ipcountry') || 'Unknown';
       const userAgent = request.headers.get('user-agent') || 'Unknown';
-      const tlsVersion = traceData.tls || 'Unknown';
-      const tlsCipher = traceData.kex || 'Unknown';
-      const colo = traceData.colo || 'Unknown';
-      const warp = traceData.warp || 'off';
-      const asn = request.headers.get('cf-asn') || 'Unknown';
-      
-      // Check for PQC support (Post-Quantum Cryptography)
-      const isPQCSupported = tlsCipher.includes('MLKEM') || tlsCipher.includes('X25519MLKEM');
       
       return new Response(JSON.stringify({
-        message: 'Hello from Cloudflare Workers!',
-        timestamp: new Date().toISOString(),
-        userConnection: {
-          ip: clientIP,
-          country: country,
-          asn: asn,
-          colo: colo,
-          userAgent: userAgent,
-          security: {
-            tlsVersion: tlsVersion,
-            tlsCipher: tlsCipher,
-            isPQCSupported: isPQCSupported,
-            warpEnabled: warp
-          }
-        },
-        cloudflareTrace: traceData
+        ip: clientIP,
+        location: location,
+        userAgent: userAgent
       }), {
         headers: { 'Content-Type': 'application/json' }
       });
