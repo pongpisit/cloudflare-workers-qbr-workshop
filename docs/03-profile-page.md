@@ -84,6 +84,15 @@ export default {
               justify-content: center;
               font-size: 60px;
               box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+              overflow: hidden;
+              object-fit: cover;
+            }
+            
+            .avatar img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 50%;
             }
 
             .name {
