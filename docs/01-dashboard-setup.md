@@ -40,35 +40,43 @@ Once logged in, you'll see the main Dashboard. Here's what you need to know:
 ### Main Navigation (Left Sidebar)
 
 ```
-📊 Dashboard
-├── 🚀 Workers & Pages
-│   ├── Overview
-│   ├── Workers
-│   ├── Pages
-│   └── Deployments
-├── 💾 Storage
-│   ├── R2
-│   ├── D1 (Database)
-│   └── KV (Cache)
-├── 🔒 Security
-│   ├── WAF
-│   ├── DDoS
-│   └── Firewall
-├── ⚙️ Settings
-│   ├── Account
-│   ├── Billing
-│   └── API Tokens
-└── 📚 Help & Support
+Build
+├── Compute & AI
+│   ├── Workers & Pages
+│   ├── Observability
+│   ├── Workers for Platforms
+│   ├── Containers (Beta)
+│   ├── Durable Objects
+│   ├── Queues
+│   ├── Workflows
+│   ├── Browser Rendering
+│   ├── AI Search (Beta)
+│   ├── Workers AI
+│   ├── AI Gateway
+│   ├── VPC (Beta)
+│   └── Email Service
+│
+├── Storage & databases
+│   ├── R2 object storage
+│   ├── Hyperdrive
+│   ├── Workers KV
+│   ├── D1 SQL database
+│   ├── Analytics Engine
+│   ├── Pipelines (Beta)
+│   ├── Vectorize
+│   └── Secrets Store (New)
+│
+└── [Other sections...]
 ```
 
 ### Key Sections for This Workshop
 
-| Section | What It Does |
-|---------|-------------|
-| **Workers & Pages** | Create and manage serverless functions |
-| **R2** | Store images and files |
-| **D1** | Create and manage databases |
-| **Workers AI** | Use AI models (under Workers) |
+| Section | Path | What It Does |
+|---------|------|-------------|
+| **Workers & Pages** | Build → Compute & AI → Workers & Pages | Create and manage serverless functions |
+| **R2** | Build → Storage & databases → R2 object storage | Store images and files |
+| **D1** | Build → Storage & databases → D1 SQL database | Create and manage databases |
+| **Workers AI** | Build → Compute & AI → Workers AI | Use AI models |
 
 ---
 

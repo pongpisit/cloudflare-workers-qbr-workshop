@@ -16,7 +16,7 @@ Create an R2 bucket and upload images via the Cloudflare Dashboard.
 ## Step 1: Navigate to R2
 
 1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
-2. In the left sidebar, click **Storage** → **R2**
+2. In the left sidebar, click **Build** → **Storage & databases** → **R2 object storage**
 3. You'll see the R2 overview page
 
 ---
@@ -133,12 +133,13 @@ For this workshop, you'll stay in the free tier.
 
 ```
 Cloudflare Dashboard
-├── Storage (left sidebar)
-│   ├── R2
-│   │   ├── Create bucket
-│   │   ├── Settings (public access)
-│   │   ├── Objects (upload files)
-│   │   └── Public URL
+├── Build (left sidebar)
+│   ├── Storage & databases
+│   │   ├── R2 object storage
+│   │   │   ├── Create bucket
+│   │   │   ├── Settings (public access)
+│   │   │   ├── Objects (upload files)
+│   │   │   └── Public URL
 ```
 
 ---

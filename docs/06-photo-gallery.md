@@ -328,14 +328,16 @@ Then refresh your gallery page to see the new photo.
 
 ```
 Cloudflare Dashboard
-├── Workers & Pages
-│   ├── Workers
-│   │   ├── Your Worker
-│   │   │   ├── Editor (code)
-│   │   │   └── Settings (D1 binding)
-├── Storage
-│   ├── R2 (images)
-│   └── D1 (captions)
+├── Build
+│   ├── Compute & AI
+│   │   ├── Workers & Pages
+│   │   │   ├── Your Worker
+│   │   │   │   ├── Editor (code)
+│   │   │   │   └── Settings (D1 binding)
+│   │
+│   ├── Storage & databases
+│   │   ├── R2 object storage (images)
+│   │   └── D1 SQL database (captions)
 ```
 
 ---

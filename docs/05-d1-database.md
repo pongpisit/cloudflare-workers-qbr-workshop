@@ -16,7 +16,7 @@ Create a D1 database and add tables via the Cloudflare Dashboard.
 ## Step 1: Navigate to D1
 
 1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
-2. In the left sidebar, click **Storage** → **D1**
+2. In the left sidebar, click **Build** → **Storage & databases** → **D1 SQL database**
 3. You'll see the D1 overview page
 
 ---
@@ -146,12 +146,13 @@ For this workshop, you'll stay in the free tier.
 
 ```
 Cloudflare Dashboard
-├── Storage (left sidebar)
-│   ├── D1
-│   │   ├── Create database
-│   │   ├── Console (SQL editor)
-│   │   ├── Settings (Database ID)
-│   │   └── Backups
+├── Build (left sidebar)
+│   ├── Storage & databases
+│   │   ├── D1 SQL database
+│   │   │   ├── Create database
+│   │   │   ├── Console (SQL editor)
+│   │   │   ├── Settings (Database ID)
+│   │   │   └── Backups
 ```
 
 ---

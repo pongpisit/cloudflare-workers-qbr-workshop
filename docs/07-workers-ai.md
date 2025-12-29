@@ -16,15 +16,16 @@ Add an AI chatbot to your Worker using Cloudflare's Workers AI.
 ## Step 1: Enable Workers AI
 
 1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
-2. Click **Workers & Pages** → **Workers**
-3. Click your Worker
-4. Click **Settings** button
-5. Look for **AI/ML** or **Bindings** section
-6. Click **Add binding**
-7. Fill in:
+2. Click **Build** → **Compute & AI** → **Workers & Pages**
+3. Click **Workers** tab
+4. Click your Worker
+5. Click **Settings** button
+6. Look for **AI/ML** or **Bindings** section
+7. Click **Add binding**
+8. Fill in:
    - **Variable name**: `AI`
    - **Resource type**: `AI`
-8. Click **Save and deploy**
+9. Click **Save and deploy**
 
 ---
 
@@ -430,11 +431,14 @@ const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
 
 ```
 Cloudflare Dashboard
-├── Workers & Pages
-│   ├── Workers
-│   │   ├── Your Worker
-│   │   │   ├── Editor (code)
-│   │   │   └── Settings (AI binding)
+├── Build
+│   ├── Compute & AI
+│   │   ├── Workers & Pages
+│   │   │   ├── Your Worker
+│   │   │   │   ├── Editor (code)
+│   │   │   │   └── Settings (AI binding)
+│   │   │
+│   │   └── Workers AI
 ```
 
 ---

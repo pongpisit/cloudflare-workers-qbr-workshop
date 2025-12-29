@@ -1,6 +1,8 @@
 # Cloudflare Workers Dashboard Workshop
 
-Learn to build applications with **Cloudflare Workers** using the **Cloudflare Dashboard** (no CLI required). Complete in **2.5 hours**.
+Learn to build applications with **Cloudflare Workers** using the **Cloudflare Dashboard** (no CLI required). Complete in **3 hours**.
+
+**Updated for latest Cloudflare Dashboard navigation** ✨
 
 ---
 

@@ -199,14 +199,15 @@ Include in your portfolio or resume:
 
 ```
 Cloudflare Dashboard
-├── Workers & Pages
-│   ├── Workers
-│   │   ├── Your Worker
-│   │   │   ├── Editor (code)
-│   │   │   ├── Settings (config)
-│   │   │   ├── Logs (debugging)
-│   │   │   ├── Analytics (metrics)
-│   │   │   └── Deployments (versions)
+├── Build
+│   ├── Compute & AI
+│   │   ├── Workers & Pages
+│   │   │   ├── Your Worker
+│   │   │   │   ├── Editor (code)
+│   │   │   │   ├── Settings (config)
+│   │   │   │   ├── Logs (debugging)
+│   │   │   │   ├── Analytics (metrics)
+│   │   │   │   └── Deployments (versions)
 ```
 
 ---
