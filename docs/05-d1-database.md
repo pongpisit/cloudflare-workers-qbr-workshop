@@ -24,7 +24,7 @@ Create a D1 database and add tables via the Cloudflare Dashboard.
 ## Step 2: Create a D1 Database
 
 1. Click **Create database** button
-2. Enter a database name (e.g., `workshop-db`, `photo-app`)
+2. Enter the database name: `workshop-db`
    - Can contain letters, numbers, hyphens
    - Must be lowercase
 3. Click **Create database**
