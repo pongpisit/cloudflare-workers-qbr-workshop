@@ -13,23 +13,31 @@ Add an AI chatbot to your Worker using Cloudflare's Workers AI.
 
 ---
 
-## Step 1: Enable Workers AI
+## Step 1: Create a New Worker for the AI Chatbot
 
 1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
 2. Click **Build** → **Compute & AI** → **Workers & Pages**
-3. Click **Workers** tab
-4. Click your Worker
-5. Click **Settings** button
-6. Look for **AI/ML** or **Bindings** section
-7. Click **Add binding**
-8. Fill in:
-   - **Variable name**: `AI`
-   - **Resource type**: `AI`
-9. Click **Save and deploy**
+3. Click **Create application** → **Create Worker**
+4. Name it: `ai-chatbot` (or any name you like)
+5. Click **Deploy**
+6. You'll see the default Hello World preview — leave it for now
+7. Stay on this new Worker; we'll add bindings next
 
 ---
 
-## Step 2: Update Your Worker Code
+## Step 2: Add AI Binding
+
+1. Click the **Bindings** tab at the top (next to Overview, Metrics, Deployments)
+2. Click **Add binding**
+3. A modal with binding types will appear — select **AI**
+4. Click **Add binding** in the modal footer
+5. In the “AI binding” form, fill in:
+   - **Variable name**: `AI`
+6. Click **Deploy** to save the binding
+
+---
+
+## Step 3: Update Your Worker Code
 
 Replace your Worker code with this AI chatbot:
 
@@ -366,7 +374,7 @@ export default {
 
 ---
 
-## Step 3: Save and Deploy
+## Step 4: Save and Deploy
 
 1. Click **Save and Deploy**
 2. Wait for deployment
@@ -375,7 +383,7 @@ export default {
 
 ---
 
-## Step 4: Test the Chatbot
+## Step 5: Test the Chatbot
 
 1. Type a message in the chat box
 2. Click **Send** or press Enter
@@ -387,7 +395,7 @@ export default {
 
 ---
 
-## Step 5: Understand the AI Models
+## Step 6: Understand the AI Models
 
 Workers AI supports multiple models:
 
@@ -400,7 +408,7 @@ Workers AI supports multiple models:
 
 ---
 
-## Step 6: Change the AI Model (Optional)
+## Step 7: Change the AI Model (Optional)
 
 To use a different model, change this line:
 
