@@ -160,11 +160,13 @@ Before adding the upload button code, set up your R2 URL as an environment varia
 
 1. Go to your Worker in the Dashboard
 2. Click **Settings** tab
-3. Under **Variables and Secrets**, click **Add**
-4. Set the following:
-   - **Variable name**: `R2_URL`
-   - **Value**: Your R2 public URL (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
-5. Click **Deploy**
+3. Under **Variables and Secrets**, click **Add variable**
+4. In the dialog that opens:
+   - **Type**: Select "Text" (default)
+   - **Variable name**: Enter `R2_URL`
+   - **Value**: Paste your R2 public URL (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
+5. Click **Add variable** button (if you want to add more variables)
+6. Click **Deploy** button to save
 
 Now your Worker has access to the R2 URL via `env.R2_URL`.
 
