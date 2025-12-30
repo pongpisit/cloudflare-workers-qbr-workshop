@@ -171,9 +171,9 @@ async function showFeed(env) {
           </div>
           <img src="/image/${photo.filename}" alt="" class="post-image">
           <div class="post-actions">
-            <button class="action-btn like-btn" title="Like">❤️</button>
-            <button class="action-btn comment-btn" title="Comment">💬</button>
-            <button class="action-btn share-btn" title="Share">📤</button>
+            <button class="action-btn like-btn" title="Like">&#10084;&#65039;</button>
+            <button class="action-btn comment-btn" title="Comment">&#128172;</button>
+            <button class="action-btn share-btn" title="Share">&#128228;</button>
           </div>
           <div class="post-content">
             <div class="caption">${photo.caption || ''}</div>
