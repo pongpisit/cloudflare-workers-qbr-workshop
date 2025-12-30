@@ -886,12 +886,6 @@ Cloudflare Dashboard
 
 ---
 
-## Next Steps
-
-Ready to deploy? Go to **[Module 8: Deploy & Share](./08-deploy-share.md)** to share your app with the world.
-
----
-
 ## Troubleshooting
 
 ### AI not responding?
