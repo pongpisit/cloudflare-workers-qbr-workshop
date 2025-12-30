@@ -75,7 +75,8 @@ Now you have both bindings configured:
 
 ## Step 5: Update Your Worker Code
 
-Go to your Worker and replace all code with this:
+1. Click **Edit code** button
+2. Replace all code with this:
 
 ```javascript
 export default {
