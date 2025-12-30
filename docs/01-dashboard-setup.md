@@ -114,7 +114,7 @@ The Dashboard has these main areas:
 
 ---
 
-## Step 7: Deploy Your First Worker
+## Step 6: Deploy Your First Worker
 
 1. After clicking "Start with Hello World!", you'll see the "Deploy Hello World" dialog
 2. The dialog shows:
@@ -126,7 +126,7 @@ The Dashboard has these main areas:
 
 ---
 
-## Step 8: Explore the Worker Project Dashboard
+## Step 7: Explore the Worker Project Dashboard
 
 After deployment, you'll see the Worker project dashboard with several tabs:
 
@@ -149,7 +149,7 @@ After deployment, you'll see the Worker project dashboard with several tabs:
 
 ---
 
-## Step 9: Test Your Worker
+## Step 8: Test Your Worker
 
 1. Click the blue **Visit** button (top right)
 2. You should see "Hello World" in your browser
@@ -157,7 +157,7 @@ After deployment, you'll see the Worker project dashboard with several tabs:
 
 ---
 
-## Step 10: Understand Worker URLs
+## Step 9: Understand Worker URLs
 
 Your Worker gets a unique URL:
 
