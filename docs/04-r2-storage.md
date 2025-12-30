@@ -156,11 +156,12 @@ The variable name you chose (`mybucket`) becomes `env.mybucket` in your Worker c
 
 ## Step 6: Add Upload Button to Your Profile Page
 
-Now that R2 is bound to your Worker, copy and paste this complete code into your Worker. Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL from Step 4.
+Now that R2 is bound to your Worker, copy and paste this complete code into your Worker. Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL from Step 4 (only need to replace it once at the top).
 
 ```javascript
 export default {
   async fetch(request, env) {
+    const R2_URL = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev';
     const url = new URL(request.url);
     const path = url.pathname;
 
@@ -170,7 +171,7 @@ export default {
       try {
         const profilePic = await env.mybucket.get('profile-picture');
         if (profilePic) {
-          profileImageHtml = '<img src="https://pub-xxxxxxxxxxxxxxxx.r2.dev/profile-picture" alt="Profile Picture">';
+          profileImageHtml = '<img src="' + R2_URL + '/profile-picture" alt="Profile Picture">';
         }
       } catch (e) {
         console.log('No profile picture yet');
@@ -481,7 +482,7 @@ export default {
       try {
         await env.mybucket.put('profile-picture', file);
         
-        const publicUrl = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev/profile-picture';
+        const publicUrl = R2_URL + '/profile-picture';
         return new Response(JSON.stringify({ url: publicUrl }), {
           headers: { 'Content-Type': 'application/json' }
         });
