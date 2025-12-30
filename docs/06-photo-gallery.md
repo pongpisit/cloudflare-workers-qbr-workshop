@@ -140,20 +140,34 @@ async function showFeed(env) {
   
   let postsHtml = "";
   if (photos.length === 0) {
-    postsHtml = '<p class="empty">No posts yet. Share your first photo!</p>';
+    postsHtml = '<div class="empty"><p>No posts yet. Share your first photo!</p></div>';
   } else {
     for (const photo of photos) {
-      const date = new Date(photo.created_at).toLocaleDateString();
+      const date = new Date(photo.created_at);
+      const timeAgo = getTimeAgo(date);
       postsHtml += `
         <article class="post">
-          <img src="/image/${photo.filename}" alt="">
-          <div class="post-content">
-            <p class="caption">${photo.caption || ""}</p>
-            <p class="date">${date}</p>
-            <form action="/delete/${photo.id}" method="POST" class="delete-form">
-              <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
-            </form>
+          <div class="post-header">
+            <div class="user-info">
+              <div class="avatar">CF</div>
+              <div class="user-details">
+                <div class="username">You</div>
+                <div class="timestamp">${timeAgo}</div>
+              </div>
+            </div>
+            <button class="menu-btn" onclick="if(confirm('Delete this post?')) { document.getElementById('delete-${photo.id}').submit(); }">⋯</button>
           </div>
+          <img src="/image/${photo.filename}" alt="" class="post-image">
+          <div class="post-actions">
+            <button class="action-btn like-btn" title="Like">♡</button>
+            <button class="action-btn comment-btn" title="Comment">💬</button>
+            <button class="action-btn share-btn" title="Share">↗</button>
+          </div>
+          <div class="post-content">
+            <div class="caption">${photo.caption || ''}</div>
+            <div class="timestamp-full">${date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+          </div>
+          <form id="delete-${photo.id}" action="/delete/${photo.id}" method="POST" style="display:none;"></form>
         </article>`;
     }
   }
@@ -161,46 +175,318 @@ async function showFeed(env) {
   return new Response(`<!DOCTYPE html>
 <html>
 <head>
-  <title>PhotoGram</title>
+  <title>CloudflareGram</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, sans-serif; background: #fafafa; min-height: 100vh; }
     
-    header { background: white; border-bottom: 1px solid #dbdbdb; padding: 12px 20px; position: sticky; top: 0; z-index: 100; }
-    .header-content { max-width: 600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 24px; font-weight: 600; font-style: italic; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; 
+      background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+      min-height: 100vh;
+      color: #262626;
+    }
     
-    .new-post-btn { background: #0095f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-    .new-post-btn:hover { background: #1877f2; }
+    header { 
+      background: white; 
+      border-bottom: 1px solid #e5e5e5; 
+      padding: 16px 20px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
     
-    .feed { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+    .header-content { 
+      max-width: 600px; 
+      margin: 0 auto; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
     
-    .post { background: white; border: 1px solid #dbdbdb; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
-    .post img { width: 100%; aspect-ratio: 1; object-fit: cover; }
-    .post-content { padding: 15px; }
-    .caption { font-size: 14px; line-height: 1.5; margin-bottom: 8px; }
-    .date { font-size: 12px; color: #8e8e8e; margin-bottom: 10px; }
-    .delete-form button { background: none; border: none; color: #ed4956; cursor: pointer; font-size: 12px; }
-    .delete-form button:hover { text-decoration: underline; }
+    .logo { 
+      font-size: 28px; 
+      font-weight: 700; 
+      background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+    }
     
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; justify-content: center; align-items: center; }
-    .modal.active { display: flex; }
-    .modal-box { background: white; border-radius: 12px; padding: 20px; width: 90%; max-width: 400px; }
-    .modal-box h2 { margin-bottom: 15px; font-size: 18px; }
-    .modal-box input[type="file"] { margin-bottom: 15px; }
-    .modal-box textarea { width: 100%; height: 80px; border: 1px solid #dbdbdb; border-radius: 8px; padding: 10px; resize: none; font-family: inherit; margin-bottom: 15px; }
-    .modal-box button[type="submit"] { width: 100%; background: #0095f6; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-    .close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 30px; cursor: pointer; }
+    .new-post-btn { 
+      background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+      color: white; 
+      border: none; 
+      padding: 10px 20px; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
     
-    .empty { text-align: center; padding: 60px 20px; color: #8e8e8e; }
+    .new-post-btn:hover { 
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(246, 130, 31, 0.3);
+    }
+    
+    .new-post-btn:active {
+      transform: translateY(0);
+    }
+    
+    .feed { 
+      max-width: 600px; 
+      margin: 20px auto; 
+      padding: 0 20px;
+    }
+    
+    .post { 
+      background: white; 
+      border: 1px solid #e5e5e5; 
+      border-radius: 8px; 
+      margin-bottom: 24px; 
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    
+    .post:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .username {
+      font-weight: 600;
+      font-size: 14px;
+      color: #262626;
+    }
+    
+    .timestamp {
+      font-size: 12px;
+      color: #8e8e8e;
+    }
+    
+    .menu-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #262626;
+      padding: 4px 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .menu-btn:hover {
+      color: #F6821F;
+    }
+    
+    .post-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .post-actions {
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .action-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: all 0.2s ease;
+      color: #262626;
+    }
+    
+    .action-btn:hover {
+      color: #F6821F;
+      transform: scale(1.1);
+    }
+    
+    .like-btn:hover {
+      color: #ed4956;
+    }
+    
+    .post-content {
+      padding: 12px 16px;
+    }
+    
+    .caption {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #262626;
+      margin-bottom: 8px;
+      word-wrap: break-word;
+    }
+    
+    .timestamp-full {
+      font-size: 12px;
+      color: #8e8e8e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .modal { 
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,0.5); 
+      z-index: 200; 
+      justify-content: center; 
+      align-items: center;
+      backdrop-filter: blur(4px);
+    }
+    
+    .modal.active { 
+      display: flex; 
+    }
+    
+    .modal-box { 
+      background: white; 
+      border-radius: 12px; 
+      padding: 24px; 
+      width: 90%; 
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .modal-box h2 { 
+      margin-bottom: 20px; 
+      font-size: 20px;
+      font-weight: 600;
+      color: #262626;
+    }
+    
+    .modal-box input[type="file"] { 
+      margin-bottom: 16px;
+      padding: 8px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      width: 100%;
+      cursor: pointer;
+    }
+    
+    .modal-box textarea { 
+      width: 100%; 
+      height: 100px; 
+      border: 1px solid #e5e5e5; 
+      border-radius: 6px; 
+      padding: 12px; 
+      resize: none; 
+      font-family: inherit;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+    
+    .modal-box textarea:focus {
+      outline: none;
+      border-color: #F6821F;
+      box-shadow: 0 0 0 3px rgba(246, 130, 31, 0.1);
+    }
+    
+    .modal-box button[type="submit"] { 
+      width: 100%; 
+      background: linear-gradient(135deg, #F6821F 0%, #FF6633 100%);
+      color: white; 
+      border: none; 
+      padding: 12px; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    
+    .modal-box button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(246, 130, 31, 0.3);
+    }
+    
+    .close-btn { 
+      position: absolute; 
+      top: 16px; 
+      right: 20px; 
+      background: none; 
+      border: none; 
+      color: white; 
+      font-size: 28px; 
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .close-btn:hover {
+      transform: rotate(90deg);
+    }
+    
+    .empty { 
+      text-align: center; 
+      padding: 80px 20px;
+      color: #8e8e8e;
+    }
+    
+    .empty p {
+      font-size: 16px;
+    }
+    
+    @media (max-width: 600px) {
+      .header-content {
+        padding: 0 12px;
+      }
+      
+      .feed {
+        padding: 0 12px;
+      }
+      
+      .post {
+        border-radius: 4px;
+        margin-bottom: 16px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="header-content">
-      <div class="logo">PhotoGram</div>
-      <button class="new-post-btn" onclick="document.getElementById('modal').classList.add('active')">New Post</button>
+      <div class="logo">CloudflareGram</div>
+      <button class="new-post-btn" onclick="document.getElementById('modal').classList.add('active')">+ New Post</button>
     </div>
   </header>
   
@@ -217,8 +503,38 @@ async function showFeed(env) {
   </div>
   
   <div class="feed">${postsHtml}</div>
+  
+  <script>
+    function getTimeAgo(date) {
+      const now = new Date();
+      const seconds = Math.floor((now - date) / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+      
+      if (seconds < 60) return 'just now';
+      if (minutes < 60) return minutes + 'm ago';
+      if (hours < 24) return hours + 'h ago';
+      if (days < 7) return days + 'd ago';
+      return date.toLocaleDateString();
+    }
+  </script>
 </body>
 </html>`, { headers: { "content-type": "text/html" } });
+}
+
+function getTimeAgo(date) {
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  
+  if (seconds < 60) return 'just now';
+  if (minutes < 60) return minutes + 'm ago';
+  if (hours < 24) return hours + 'h ago';
+  if (days < 7) return days + 'd ago';
+  return date.toLocaleDateString();
 }
 ```
 
