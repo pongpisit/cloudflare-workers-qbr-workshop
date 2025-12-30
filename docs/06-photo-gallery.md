@@ -627,6 +627,37 @@ Ready to add AI? Go to **[Module 7: Workers AI Integration](./07-workers-ai.md)*
 
 ---
 
+## Dashboard Navigation Summary
+
+```
+Cloudflare Dashboard
+├── Build (left sidebar)
+│   ├── Compute & AI
+│   │   ├── Workers & Pages
+│   │   │   └── photo-gallery (Worker)
+│   │   │       ├── Editor (code)
+│   │   │       ├── Settings
+│   │   │       │   ├── Bindings
+│   │   │       │   │   ├── BUCKET (R2 Bucket)
+│   │   │       │   │   └── MY_PHOTOS_DB (D1 Database)
+│   │   │       │   └── Variables and Secrets
+│   │   │       └── Logs
+│   │
+│   └── Storage & databases
+│       ├── R2 object storage
+│       │   └── photo-gallery (Bucket)
+│       │       ├── Objects (uploaded images)
+│       │       └── Settings
+│       │
+│       └── D1 SQL database
+│           └── workshop-db (Database)
+│               ├── Console (SQL editor)
+│               ├── Overview (Database ID)
+│               └── Settings
+```
+
+---
+
 ## Resources
 
 - [Workers D1 Binding](https://developers.cloudflare.com/workers/runtime-apis/web-crypto/)
