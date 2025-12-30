@@ -59,11 +59,14 @@ Build an Instagram-style photo gallery using R2 and D1. This module creates a **
 1. In the same **Settings** tab, click **Add binding** again
 2. A modal will appear showing all binding types
 3. Click **D1 database** option
-4. A configuration form will appear with two fields:
+4. A form titled "Add a D1 database binding" will appear with two fields:
    - **Variable name**: Enter `MY_PHOTOS_DB`
-   - **Database**: Click dropdown and select `workshop-db` (from Module 5)
-5. Click **Deploy** button to save and apply
+     - (This is the name used to refer to this binding in your code)
+   - **D1 database**: Click dropdown and select `workshop-db` (from Module 5)
+     - (This is the D1 database this binding is connected to)
+5. Click **Add Binding** button to save
 6. You'll see the second binding appear in "Connected Bindings"
+7. Click **Deploy** to apply all changes
 
 Now you have both bindings configured:
 - `BUCKET` → `photo-gallery` R2 bucket
