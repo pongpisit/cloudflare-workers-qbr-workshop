@@ -443,29 +443,12 @@ export default {
     </header>
     <div class="layout">
       <aside class="sidebar">
-        <h2>Pick a Model</h2>
-        <div class="model-grid">
-          <button class="model-option active" data-model="@cf/meta/llama-3.1-8b-instruct" data-label="Llama 3.1 8B">
-            <span class="model-name">Llama 3.1 8B</span>
-            <span class="model-desc">Balanced, friendly answers</span>
-          </button>
-          <button class="model-option" data-model="@cf/meta/llama-3.2-3b-instruct" data-label="Llama 3.2 3B">
-            <span class="model-name">Llama 3.2 3B</span>
-            <span class="model-desc">Fast responses</span>
-          </button>
-          <button class="model-option" data-model="@cf/mistral/mistral-7b-instruct-v0.1" data-label="Mistral 7B">
-            <span class="model-name">Mistral 7B</span>
-            <span class="model-desc">Creative storytelling</span>
-          </button>
-          <button class="model-option" data-model="@cf/google/gemma-3-12b-it" data-label="Gemma 3 12B">
-            <span class="model-name">Gemma 3 12B</span>
-            <span class="model-desc">Multilingual + structured</span>
-          </button>
-        </div>
+        <h2 id="sidebar-title">Pick a Model</h2>
+        <div class="model-grid" id="model-grid"></div>
       </aside>
       <section class="panels">
         <div class="panel" id="chat-panel">
-          <div class="pill">Current model: <strong id="model-pill">Llama 3.1 8B</strong></div>
+          <div class="pill"><span id="model-pill-label">Current model:</span> <strong id="model-pill">Llama 3.1 8B</strong></div>
           <div class="messages" id="messages">
             <div class="message ai">
               👋 Hi! I'm running on Workers AI at Cloudflare's edge. Pick a model and ask me something.
@@ -508,28 +491,31 @@ export default {
     const tabs = document.querySelectorAll('.tab');
     const chatPanel = document.getElementById('chat-panel');
     const imagePanel = document.getElementById('image-panel');
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach((t) => t.classList.remove('active'));
-        tab.classList.add('active');
-        if (tab.dataset.mode === 'chat') {
-          chatPanel.classList.remove('hidden');
-          imagePanel.classList.add('hidden');
-        } else {
-          imagePanel.classList.remove('hidden');
-          chatPanel.classList.add('hidden');
-        }
-      });
-    });
-
-    const modelButtons = document.querySelectorAll('.model-option');
+    const sidebarTitle = document.getElementById('sidebar-title');
+    const modelGrid = document.getElementById('model-grid');
     const modelPill = document.getElementById('model-pill');
-    let selectedModel = modelButtons[0]?.dataset.model || '@cf/meta/llama-3.1-8b-instruct';
+    const modelPillLabel = document.getElementById('model-pill-label');
+
+    const chatModels = [
+      { label: 'Llama 3.1 8B', desc: 'Balanced, friendly answers', value: '@cf/meta/llama-3.1-8b-instruct' },
+      { label: 'Llama 3.2 3B', desc: 'Fast responses', value: '@cf/meta/llama-3.2-3b-instruct' },
+      { label: 'Mistral 7B', desc: 'Creative storytelling', value: '@cf/mistral/mistral-7b-instruct-v0.1' },
+      { label: 'Gemma 3 12B', desc: 'Multilingual + structured', value: '@cf/google/gemma-3-12b-it' }
+    ];
+
+    const imageEngines = [
+      { label: 'Stable Diffusion XL', desc: 'High quality detail', value: '@cf/stabilityai/stable-diffusion-xl-base-1.0' },
+      { label: 'SDXL Lightning', desc: 'Fast 4-step render', value: '@cf/bytedance/stable-diffusion-xl-lightning' }
+    ];
+
+    let currentMode = 'chat';
+    let selectedChatModel = chatModels[0].value;
+    let selectedImageModel = imageEngines[0].value;
 
     function appendMessage(role, text, meta) {
       const block = document.createElement('div');
       block.className = 'message ' + role;
-      block.innerHTML = text.replace(/\\n/g, '<br>');
+      block.innerHTML = text.replace(/\n/g, '<br>');
       if (meta) {
         const metaEl = document.createElement('span');
         metaEl.className = 'meta';
@@ -541,15 +527,61 @@ export default {
       container.scrollTop = container.scrollHeight;
     }
 
-    modelButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        modelButtons.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedModel = btn.dataset.model;
-        modelPill.textContent = btn.dataset.label;
-        appendMessage('ai', 'Switched to <strong>' + btn.dataset.label + '</strong>. Ask me anything!', 'System');
+    function renderSidebar() {
+      modelGrid.innerHTML = '';
+      if (currentMode === 'chat') {
+        sidebarTitle.textContent = 'Pick a Model';
+        modelPillLabel.textContent = 'Current model:';
+        const active = chatModels.find((m) => m.value === selectedChatModel) || chatModels[0];
+        modelPill.textContent = active.label;
+        chatModels.forEach((model) => {
+          const btn = document.createElement('button');
+          btn.className = 'model-option' + (model.value === selectedChatModel ? ' active' : '');
+          btn.dataset.model = model.value;
+          btn.innerHTML = `<span class="model-name">${model.label}</span><span class="model-desc">${model.desc}</span>`;
+          btn.addEventListener('click', () => {
+            selectedChatModel = model.value;
+            renderSidebar();
+            appendMessage('ai', `Switched to <strong>${model.label}</strong>. Ask me anything!`, 'System');
+          });
+          modelGrid.appendChild(btn);
+        });
+      } else {
+        sidebarTitle.textContent = 'Choose an Image Engine';
+        modelPillLabel.textContent = 'Image model:';
+        const active = imageEngines.find((m) => m.value === selectedImageModel) || imageEngines[0];
+        modelPill.textContent = active.label;
+        imageEngines.forEach((engine) => {
+          const btn = document.createElement('button');
+          btn.className = 'model-option' + (engine.value === selectedImageModel ? ' active' : '');
+          btn.dataset.model = engine.value;
+          btn.innerHTML = `<span class="model-name">${engine.label}</span><span class="model-desc">${engine.desc}</span>`;
+          btn.addEventListener('click', () => {
+            selectedImageModel = engine.value;
+            renderSidebar();
+          });
+          modelGrid.appendChild(btn);
+        });
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentMode = tab.dataset.mode;
+        if (currentMode === 'chat') {
+          chatPanel.classList.remove('hidden');
+          imagePanel.classList.add('hidden');
+        } else {
+          imagePanel.classList.remove('hidden');
+          chatPanel.classList.add('hidden');
+        }
+        renderSidebar();
       });
     });
+
+    renderSidebar();
 
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
@@ -577,7 +609,7 @@ export default {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text, model: selectedModel })
+          body: JSON.stringify({ message: text, model: selectedChatModel })
         });
         const data = await response.json();
         if (response.ok) {
@@ -620,7 +652,7 @@ export default {
         const response = await fetch('/api/image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt })
+          body: JSON.stringify({ prompt, model: selectedImageModel })
         });
         if (!response.ok) {
           const error = await response.json();
@@ -628,7 +660,8 @@ export default {
         }
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
-        imageResult.innerHTML = '<img src="' + url + '" alt="AI generated image"><p class="muted">Prompt: ' + prompt + '</p>';
+        const engine = imageEngines.find((e) => e.value === selectedImageModel)?.label || 'Workers AI';
+        imageResult.innerHTML = '<img src="' + url + '" alt="AI generated image"><p class="muted">Prompt: ' + prompt + '<br>Engine: ' + engine + '</p>';
       } catch (error) {
         imageResult.innerHTML = '<p class="error">Error: ' + error.message + '</p>';
       } finally {
@@ -701,7 +734,7 @@ export default {
     // API endpoint for image generation
     if (path === '/api/image' && request.method === 'POST') {
       try {
-        const { prompt } = await request.json();
+        const { prompt, model } = await request.json();
         if (!prompt) {
           return new Response(JSON.stringify({ error: 'Prompt is required' }), {
             status: 400,
@@ -709,9 +742,8 @@ export default {
           });
         }
 
-        const result = await env.AI.run('@cf/stabilityai/stable-diffusion-xl-base-1.0', {
-          prompt
-        });
+        const selectedImageModel = model || '@cf/stabilityai/stable-diffusion-xl-base-1.0';
+        const result = await env.AI.run(selectedImageModel, { prompt });
 
         return new Response(result, {
           headers: { 'Content-Type': 'image/png' }
