@@ -223,6 +223,17 @@ export default {
       gap: 20px;
     }
 
+    .panel.image-mode {
+      min-height: 520px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 28px;
+      height: 100%;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -345,6 +356,12 @@ export default {
       color: rgba(255,255,255,0.65);
     }
 
+    .image-card textarea {
+      min-height: 140px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
     .examples {
       margin: 12px 0;
       display: flex;
@@ -383,6 +400,17 @@ export default {
     .muted {
       color: rgba(255,255,255,0.65);
       font-size: 13px;
+    }
+
+    .image-preview {
+      border: 1px solid var(--cf-border);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.02);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
     }
 
     .error {
@@ -449,22 +477,26 @@ export default {
             <button type="submit" class="primary" id="send-btn">Send</button>
           </form>
         </div>
-        <div class="panel hidden" id="image-panel">
-          <div class="image-card">
-            <label for="image-input">Describe an image</label>
-            <form id="image-form">
-              <textarea id="image-input" placeholder="A glowing Cloudflare data center at sunset..."></textarea>
-              <div class="examples">
-                <span class="muted">Try:</span>
-                <button type="button" class="example" data-prompt="A cute robot playing guitar in a neon city">Robot + Guitar</button>
-                <button type="button" class="example" data-prompt="A magical forest with glowing mushrooms at night">Magic Forest</button>
-                <button type="button" class="example" data-prompt="A cozy coffee shop interior with warm lighting">Coffee Shop</button>
-                <button type="button" class="example" data-prompt="A futuristic Cloudflare edge data center above the clouds">Edge Cloud</button>
+        <div class="panel image-mode hidden" id="image-panel">
+          <div class="image-grid">
+            <div class="image-card">
+              <label for="image-input">Describe an image</label>
+              <form id="image-form">
+                <textarea id="image-input" placeholder="A glowing Cloudflare data center at sunset..."></textarea>
+                <div class="examples">
+                  <span class="muted">Try:</span>
+                  <button type="button" class="example" data-prompt="A cute robot playing guitar in a neon city">Robot + Guitar</button>
+                  <button type="button" class="example" data-prompt="A magical forest with glowing mushrooms at night">Magic Forest</button>
+                  <button type="button" class="example" data-prompt="A cozy coffee shop interior with warm lighting">Coffee Shop</button>
+                  <button type="button" class="example" data-prompt="A futuristic Cloudflare edge data center above the clouds">Edge Cloud</button>
+                </div>
+                <button type="submit" class="primary" id="image-btn">Generate image</button>
+              </form>
+            </div>
+            <div class="image-preview">
+              <div class="image-result" id="image-result">
+                <p class="muted">Your AI artwork will appear here.</p>
               </div>
-              <button type="submit" class="primary" id="image-btn">Generate image</button>
-            </form>
-            <div class="image-result" id="image-result">
-              <p class="muted">Your AI artwork will appear here.</p>
             </div>
           </div>
         </div>
