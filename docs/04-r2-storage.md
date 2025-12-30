@@ -497,58 +497,33 @@ export default {
 
 ---
 
-## Step 8: Display Your Profile Picture on Your Profile Page
+## Step 8: Display Your Profile Picture Automatically
 
-Now let's update Module 3 to display your R2 profile picture:
+Your Worker already displays the profile picture automatically! When you upload an image using the upload button, it's stored in R2 and displayed immediately on your profile page.
 
-1. Go back to your Worker (Module 3)
-2. Click **Edit code**
-3. Find the avatar section:
-   ```javascript
-   <div class="avatar">[Profile]</div>
-   ```
-4. Replace it with your R2 image URL:
-   ```javascript
-   <div class="avatar">
-     <img src="https://pub-xxxxxxxxxxxxxxxx.r2.dev/profile-picture.jpg" alt="Profile Picture">
-   </div>
-   ```
-5. Replace the URL with your actual R2 public URL
-6. Click **Save and Deploy**
-7. Visit your profile page to see your picture displayed!
+The Worker uses the R2 binding to:
+1. Store uploaded images in your R2 bucket
+2. Generate public URLs automatically
+3. Display the image on your profile without needing to change any code
 
-The image will automatically resize to fit the circular profile picture frame.
+**How it works:**
+- When you upload an image, it gets saved to R2 with a unique filename
+- The Worker returns the public R2 URL
+- The image displays in the avatar section automatically
+- No manual URL changes needed!
 
----
+**To verify it's working:**
+1. Go to your profile page
+2. Click "Choose Image" button
+3. Select an image from your device
+4. The image uploads and displays immediately
+5. Refresh the page - your profile picture persists!
 
-## Step 8: Get Image URLs
-
-Once uploaded, you can access images at:
-
-```
-https://pub-xxxxxxxxxxxxxxxx.r2.dev/[filename]
-```
-
-Example:
-```
-https://pub-xxxxxxxxxxxxxxxx.r2.dev/photo1.jpg
-```
+The image automatically resizes to fit the circular profile picture frame thanks to the CSS styling.
 
 ---
 
-## Step 7: Test Image Access
-
-1. Copy an image URL
-2. Paste it in a new browser tab
-3. The image should display
-4. If it doesn't, check:
-   - Public access is enabled
-   - Filename is correct
-   - File was uploaded successfully
-
----
-
-## Step 8: Understand R2 Pricing
+## Step 9: Understand R2 Pricing
 
 R2 is very affordable:
 
