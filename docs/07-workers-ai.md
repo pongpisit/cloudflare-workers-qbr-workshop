@@ -49,281 +49,564 @@ export default {
 
     // Chat page
     if (path === '/') {
-      return new Response(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>AI Chatbot</title>
-          <style>
-            * {
-              margin: 0;
-              padding: 0;
-              box-sizing: border-box;
-            }
+      return new Response(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cloudflare AI Studio</title>
+  <style>
+    :root {
+      --cf-orange: #F6821F;
+      --cf-orange-dark: #FF6633;
+      --cf-midnight: #050914;
+      --cf-card: rgba(15, 23, 42, 0.85);
+      --cf-border: rgba(255, 255, 255, 0.12);
+      --cf-cloud: #f8fafc;
+    }
 
-            body {
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              min-height: 100vh;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding: 20px;
-            }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-            .chat-container {
-              background: white;
-              border-radius: 15px;
-              box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-              width: 100%;
-              max-width: 500px;
-              display: flex;
-              flex-direction: column;
-              height: 600px;
-            }
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(circle at top right, rgba(255, 102, 51, 0.25), transparent 40%),
+                  radial-gradient(circle at bottom left, rgba(246, 130, 31, 0.25), transparent 35%),
+                  #050914;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      color: white;
+    }
 
-            .chat-header {
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white;
-              padding: 20px;
-              border-radius: 15px 15px 0 0;
-              text-align: center;
-            }
+    .surface {
+      width: min(1080px, 100%);
+      background: var(--cf-card);
+      border-radius: 32px;
+      border: 1px solid var(--cf-border);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+    }
 
-            .chat-header h1 {
-              font-size: 1.5em;
-              margin-bottom: 5px;
-            }
+    .hero {
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(255, 102, 51, 0.25), rgba(246, 130, 31, 0.05));
+      border-bottom: 1px solid var(--cf-border);
+    }
 
-            .chat-header p {
-              font-size: 0.9em;
-              opacity: 0.9;
-            }
+    .eyebrow {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 8px;
+    }
 
-            .messages {
-              flex: 1;
-              overflow-y: auto;
-              padding: 20px;
-              display: flex;
-              flex-direction: column;
-              gap: 15px;
-            }
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
 
-            .message {
-              display: flex;
-              gap: 10px;
-              animation: slideIn 0.3s ease-out;
-            }
+    .hero p {
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      max-width: 640px;
+    }
 
-            @keyframes slideIn {
-              from {
-                opacity: 0;
-                transform: translateY(10px);
-              }
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
+    .tabs {
+      margin-top: 24px;
+      display: inline-flex;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 6px;
+    }
 
-            .message.user {
-              justify-content: flex-end;
-            }
+    .tab {
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      padding: 10px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.2s, color 0.2s;
+    }
 
-            .message-content {
-              max-width: 80%;
-              padding: 12px 16px;
-              border-radius: 12px;
-              line-height: 1.5;
-            }
+    .tab.active {
+      background: linear-gradient(135deg, var(--cf-orange), var(--cf-orange-dark));
+      color: white;
+      box-shadow: 0 12px 24px rgba(255,102,51,0.25);
+    }
 
-            .message.user .message-content {
-              background: #667eea;
-              color: white;
-              border-radius: 12px 0 12px 12px;
-            }
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 560px;
+    }
 
-            .message.ai .message-content {
-              background: #f0f0f0;
-              color: #333;
-              border-radius: 0 12px 12px 12px;
-            }
+    .sidebar {
+      padding: 28px;
+      border-right: 1px solid var(--cf-border);
+      background: rgba(255,255,255,0.02);
+    }
 
-            .message.ai .avatar {
-              font-size: 1.5em;
-            }
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
 
-            .input-area {
-              padding: 20px;
-              border-top: 1px solid #eee;
-              display: flex;
-              gap: 10px;
-            }
+    .model-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-            input {
-              flex: 1;
-              padding: 12px 16px;
-              border: 1px solid #ddd;
-              border-radius: 25px;
-              font-size: 1em;
-              outline: none;
-              transition: border-color 0.2s;
-            }
+    .model-option {
+      width: 100%;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid var(--cf-border);
+      background: rgba(255,255,255,0.02);
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: border 0.2s, transform 0.2s, background 0.2s;
+    }
 
-            input:focus {
-              border-color: #667eea;
-            }
+    .model-option span {
+      display: block;
+    }
 
-            button {
-              padding: 12px 24px;
-              background: #667eea;
-              color: white;
-              border: none;
-              border-radius: 25px;
-              cursor: pointer;
-              font-weight: 600;
-              transition: background 0.2s;
-            }
+    .model-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
 
-            button:hover {
-              background: #764ba2;
-            }
+    .model-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 4px;
+    }
 
-            button:disabled {
-              background: #ccc;
-              cursor: not-allowed;
-            }
+    .model-option.active {
+      border-color: rgba(255,102,51,0.9);
+      background: rgba(255,102,51,0.15);
+      box-shadow: 0 15px 30px rgba(255,102,51,0.2);
+    }
 
-            .loading {
-              display: flex;
-              gap: 5px;
-              align-items: center;
-            }
+    .model-option:hover {
+      border-color: rgba(246,130,31,0.9);
+      transform: translateY(-2px);
+    }
 
-            .loading span {
-              width: 8px;
-              height: 8px;
-              background: #667eea;
-              border-radius: 50%;
-              animation: bounce 1.4s infinite;
-            }
+    .panels {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
 
-            .loading span:nth-child(2) {
-              animation-delay: 0.2s;
-            }
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--cf-border);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-            .loading span:nth-child(3) {
-              animation-delay: 0.4s;
-            }
+    .hidden {
+      display: none !important;
+    }
 
-            @keyframes bounce {
-              0%, 80%, 100% { transform: scale(0); }
-              40% { transform: scale(1); }
-            }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+    }
 
-            @media (max-width: 600px) {
-              .chat-container {
-                height: 100vh;
-                border-radius: 0;
-              }
+    .pill strong {
+      color: white;
+    }
 
-              .message-content {
-                max-width: 90%;
-              }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="chat-container">
-            <div class="chat-header">
-              <h1> AI Chatbot</h1>
-              <p>Powered by Cloudflare Workers AI</p>
-            </div>
+    .messages {
+      flex: 1;
+      min-height: 320px;
+      max-height: 420px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-right: 8px;
+    }
 
-            <div class="messages" id="messages">
-              <div class="message ai">
-                <div class="avatar"></div>
-                <div class="message-content">
-                  Hi! I'm an AI chatbot running on Cloudflare Workers. How can I help you today?
-                </div>
-              </div>
-            </div>
+    .message {
+      padding: 16px 18px;
+      border-radius: 18px;
+      max-width: 85%;
+      line-height: 1.5;
+      font-size: 15px;
+      color: var(--cf-cloud);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      animation: fadeUp 0.2s ease;
+    }
 
-            <div class="input-area">
-              <input
-                type="text"
-                id="input"
-                placeholder="Type your message..."
-                autocomplete="off"
-              />
-              <button id="send" onclick="sendMessage()">Send</button>
+    .message.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--cf-orange), var(--cf-orange-dark));
+    }
+
+    .message.ai {
+      align-self: flex-start;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--cf-border);
+    }
+
+    .message .meta {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      opacity: 0.65;
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    form.chat-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--cf-border);
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    textarea {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: white;
+      resize: none;
+      min-height: 56px;
+      font-size: 15px;
+      line-height: 1.5;
+      font-family: inherit;
+    }
+
+    textarea:focus {
+      outline: none;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--cf-orange), var(--cf-orange-dark));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 14px 26px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button.primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 35px rgba(255,102,51,0.35);
+    }
+
+    button.primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .image-card label {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .examples {
+      margin: 12px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .example {
+      border: 1px solid var(--cf-border);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.85);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border 0.2s, background 0.2s;
+    }
+
+    .example:hover {
+      border-color: rgba(246,130,31,0.8);
+      background: rgba(246,130,31,0.15);
+    }
+
+    .image-result {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .image-result img {
+      max-width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+      margin-bottom: 8px;
+    }
+
+    .muted {
+      color: rgba(255,255,255,0.65);
+      font-size: 13px;
+    }
+
+    .error {
+      color: #FCA5A5;
+      font-size: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--cf-border);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="surface">
+    <header class="hero">
+      <div class="eyebrow">Workers AI</div>
+      <h1>Cloudflare AI Studio</h1>
+      <p>Pick a model, ask questions, and even generate images — all powered by Workers AI and styled with Cloudflare's signature gradients.</p>
+      <div class="tabs">
+        <button class="tab active" data-mode="chat">Chat Mode</button>
+        <button class="tab" data-mode="image">Image Studio</button>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Pick a Model</h2>
+        <div class="model-grid">
+          <button class="model-option active" data-model="@cf/meta/llama-3.1-8b-instruct" data-label="Llama 3.1 8B">
+            <span class="model-name">Llama 3.1 8B</span>
+            <span class="model-desc">Balanced, friendly answers</span>
+          </button>
+          <button class="model-option" data-model="@cf/meta/llama-3.2-3b-instruct" data-label="Llama 3.2 3B">
+            <span class="model-name">Llama 3.2 3B</span>
+            <span class="model-desc">Fast responses</span>
+          </button>
+          <button class="model-option" data-model="@cf/mistral/mistral-7b-instruct-v0.1" data-label="Mistral 7B">
+            <span class="model-name">Mistral 7B</span>
+            <span class="model-desc">Creative storytelling</span>
+          </button>
+          <button class="model-option" data-model="@cf/google/gemma-3-12b-it" data-label="Gemma 3 12B">
+            <span class="model-name">Gemma 3 12B</span>
+            <span class="model-desc">Multilingual + structured</span>
+          </button>
+        </div>
+      </aside>
+      <section class="panels">
+        <div class="panel" id="chat-panel">
+          <div class="pill">Current model: <strong id="model-pill">Llama 3.1 8B</strong></div>
+          <div class="messages" id="messages">
+            <div class="message ai">
+              👋 Hi! I'm running on Workers AI at Cloudflare's edge. Pick a model and ask me something.
+              <span class="meta">System</span>
             </div>
           </div>
+          <form class="chat-form" id="chat-form">
+            <textarea id="chat-input" placeholder="Ask me about Workers, R2, D1, or anything else..."></textarea>
+            <button type="submit" class="primary" id="send-btn">Send</button>
+          </form>
+        </div>
+        <div class="panel hidden" id="image-panel">
+          <div class="image-card">
+            <label for="image-input">Describe an image</label>
+            <form id="image-form">
+              <textarea id="image-input" placeholder="A glowing Cloudflare data center at sunset..."></textarea>
+              <div class="examples">
+                <span class="muted">Try:</span>
+                <button type="button" class="example" data-prompt="A cute robot playing guitar in a neon city">Robot + Guitar</button>
+                <button type="button" class="example" data-prompt="A magical forest with glowing mushrooms at night">Magic Forest</button>
+                <button type="button" class="example" data-prompt="A cozy coffee shop interior with warm lighting">Coffee Shop</button>
+                <button type="button" class="example" data-prompt="A futuristic Cloudflare edge data center above the clouds">Edge Cloud</button>
+              </div>
+              <button type="submit" class="primary" id="image-btn">Generate image</button>
+            </form>
+            <div class="image-result" id="image-result">
+              <p class="muted">Your AI artwork will appear here.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 
-          <script>
-            const messagesDiv = document.getElementById('messages');
-            const input = document.getElementById('input');
-            const sendBtn = document.getElementById('send');
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const chatPanel = document.getElementById('chat-panel');
+    const imagePanel = document.getElementById('image-panel');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        if (tab.dataset.mode === 'chat') {
+          chatPanel.classList.remove('hidden');
+          imagePanel.classList.add('hidden');
+        } else {
+          imagePanel.classList.remove('hidden');
+          chatPanel.classList.add('hidden');
+        }
+      });
+    });
 
-            input.addEventListener('keypress', (e) => {
-              if (e.key === 'Enter') sendMessage();
-            });
+    const modelButtons = document.querySelectorAll('.model-option');
+    const modelPill = document.getElementById('model-pill');
+    let selectedModel = modelButtons[0]?.dataset.model || '@cf/meta/llama-3.1-8b-instruct';
 
-            async function sendMessage() {
-              const text = input.value.trim();
-              if (!text) return;
+    function appendMessage(role, text, meta) {
+      const block = document.createElement('div');
+      block.className = 'message ' + role;
+      block.innerHTML = text.replace(/\\n/g, '<br>');
+      if (meta) {
+        const metaEl = document.createElement('span');
+        metaEl.className = 'meta';
+        metaEl.textContent = meta;
+        block.appendChild(metaEl);
+      }
+      const container = document.getElementById('messages');
+      container.appendChild(block);
+      container.scrollTop = container.scrollHeight;
+    }
 
-              // Add user message
-              const userMsg = document.createElement('div');
-              userMsg.className = 'message user';
-              userMsg.innerHTML = \`<div class="message-content">\${text}</div>\`;
-              messagesDiv.appendChild(userMsg);
+    modelButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        modelButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedModel = btn.dataset.model;
+        modelPill.textContent = btn.dataset.label;
+        appendMessage('ai', 'Switched to <strong>' + btn.dataset.label + '</strong>. Ask me anything!', 'System');
+      });
+    });
 
-              input.value = '';
-              sendBtn.disabled = true;
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
 
-              // Scroll to bottom
-              messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    chatForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      sendMessage();
+    });
 
-              try {
-                // Send to AI endpoint
-                const response = await fetch('/api/chat', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ message: text })
-                });
+    chatInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
 
-                const data = await response.json();
+    async function sendMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      appendMessage('user', text);
+      chatInput.value = '';
+      sendBtn.disabled = true;
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, model: selectedModel })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          appendMessage('ai', data.response, data.model);
+        } else {
+          appendMessage('ai', data.error || 'Workers AI returned an error.', 'Error');
+        }
+      } catch (error) {
+        appendMessage('ai', 'Unable to reach Workers AI right now. Please try again.', 'Network');
+      } finally {
+        sendBtn.disabled = false;
+        chatInput.focus();
+      }
+    }
 
-                // Add AI response
-                const aiMsg = document.createElement('div');
-                aiMsg.className = 'message ai';
-                aiMsg.innerHTML = \`
-                  <div class="avatar"></div>
-                  <div class="message-content">\${data.response}</div>
-                \`;
-                messagesDiv.appendChild(aiMsg);
+    const imageForm = document.getElementById('image-form');
+    const imageInput = document.getElementById('image-input');
+    const imageBtn = document.getElementById('image-btn');
+    const imageResult = document.getElementById('image-result');
+    const exampleButtons = document.querySelectorAll('.example');
 
-                // Scroll to bottom
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-              } catch (error) {
-                const errorMsg = document.createElement('div');
-                errorMsg.className = 'message ai';
-                errorMsg.innerHTML = \`
-                  <div class="avatar"></div>
-                  <div class="message-content">Sorry, I encountered an error. Please try again.</div>
-                \`;
-                messagesDiv.appendChild(errorMsg);
-              }
+    exampleButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        imageInput.value = btn.dataset.prompt;
+      });
+    });
 
-              sendBtn.disabled = false;
-              input.focus();
-            }
-          </script>
-        </body>
-        </html>
+    imageForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      await generateImage();
+    });
+
+    async function generateImage() {
+      const prompt = imageInput.value.trim();
+      if (!prompt) return;
+      imageBtn.disabled = true;
+      imageBtn.textContent = 'Generating...';
+      imageResult.innerHTML = '<p class="muted">Rendering image with Workers AI...</p>';
+      try {
+        const response = await fetch('/api/image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt })
+        });
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Image generation failed');
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        imageResult.innerHTML = '<img src="' + url + '" alt="AI generated image"><p class="muted">Prompt: ' + prompt + '</p>';
+      } catch (error) {
+        imageResult.innerHTML = '<p class="error">Error: ' + error.message + '</p>';
+      } finally {
+        imageBtn.disabled = false;
+        imageBtn.textContent = 'Generate image';
+      }
+    }
+  </script>
+</body>
+</html>
       `, {
         headers: { 'Content-Type': 'text/html' }
       });
@@ -332,7 +615,7 @@ export default {
     // API endpoint for chat
     if (path === '/api/chat' && request.method === 'POST') {
       try {
-        const { message } = await request.json();
+        const { message, model } = await request.json();
 
         if (!message) {
           return new Response(JSON.stringify({
@@ -343,23 +626,67 @@ export default {
           });
         }
 
-        // Call Workers AI
-        const response = await env.AI.run('@cf/mistral/mistral-7b-instruct-v0.1', {
-          prompt: message,
+        const selectedModel = model || '@cf/meta/llama-3.1-8b-instruct';
+        const modelName = selectedModel.split('/').pop();
+
+        const response = await env.AI.run(selectedModel, {
+          messages: [
+            {
+              role: 'system',
+              content: 'You are Cloudflare\'s helpful AI assistant. Keep answers concise, friendly, and accurate.'
+            },
+            { role: 'user', content: message }
+          ],
           max_tokens: 256
         });
 
-        const aiResponse = response.response || 'No response';
+        let text = 'No response';
+        if (typeof response.response === 'string') {
+          text = response.response;
+        } else if (Array.isArray(response.result)) {
+          text = response.result
+            .flatMap((entry) => entry.output_text ?? entry.response ?? entry.content ?? [])
+            .join('\n')
+            .trim() || 'No response';
+        }
 
         return new Response(JSON.stringify({
-          response: aiResponse,
-          model: 'Mistral 7B'
+          response: text || 'No response',
+          model: modelName
         }), {
           headers: { 'Content-Type': 'application/json' }
         });
       } catch (error) {
         return new Response(JSON.stringify({
-          error: error.message
+          error: error.message || 'Workers AI call failed'
+        }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
+    // API endpoint for image generation
+    if (path === '/api/image' && request.method === 'POST') {
+      try {
+        const { prompt } = await request.json();
+        if (!prompt) {
+          return new Response(JSON.stringify({ error: 'Prompt is required' }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        const result = await env.AI.run('@cf/stabilityai/stable-diffusion-xl-base-1.0', {
+          prompt
+        });
+
+        return new Response(result, {
+          headers: { 'Content-Type': 'image/png' }
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({
+          error: error.message || 'Image generation failed'
         }), {
           status: 500,
           headers: { 'Content-Type': 'application/json' }
