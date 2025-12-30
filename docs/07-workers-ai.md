@@ -538,11 +538,11 @@ export default {
           const btn = document.createElement('button');
           btn.className = 'model-option' + (model.value === selectedChatModel ? ' active' : '');
           btn.dataset.model = model.value;
-          btn.innerHTML = `<span class="model-name">${model.label}</span><span class="model-desc">${model.desc}</span>`;
+          btn.innerHTML = '<span class="model-name">' + model.label + '</span><span class="model-desc">' + model.desc + '</span>';
           btn.addEventListener('click', () => {
             selectedChatModel = model.value;
             renderSidebar();
-            appendMessage('ai', `Switched to <strong>${model.label}</strong>. Ask me anything!`, 'System');
+            appendMessage('ai', 'Switched to <strong>' + model.label + '</strong>. Ask me anything!', 'System');
           });
           modelGrid.appendChild(btn);
         });
@@ -555,7 +555,7 @@ export default {
           const btn = document.createElement('button');
           btn.className = 'model-option' + (engine.value === selectedImageModel ? ' active' : '');
           btn.dataset.model = engine.value;
-          btn.innerHTML = `<span class="model-name">${engine.label}</span><span class="model-desc">${engine.desc}</span>`;
+          btn.innerHTML = '<span class="model-name">' + engine.label + '</span><span class="model-desc">' + engine.desc + '</span>';
           btn.addEventListener('click', () => {
             selectedImageModel = engine.value;
             renderSidebar();
