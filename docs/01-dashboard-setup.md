@@ -80,34 +80,27 @@ Build
 
 ---
 
-## Step 4: Navigate to Workers & Pages
-
-1. In the left sidebar, click **Build** → **Compute & AI** → **Workers & Pages**
-2. Review the Workers & Pages overview page to see any existing projects
-3. Locate the blue **Create application** button in the top right — we'll use it in Step 6
-
----
-
-## Step 5: Understand the Dashboard Layout
+## Step 4: Understand the Dashboard Layout
 
 The Dashboard has these main areas:
 
 ### Top Navigation Bar
-- **Cloudflare logo** - Click to go home
-- **Search** - Find resources quickly
-- **Account menu** - Profile, settings, logout
+- **Cloudflare logo** – Go home
+- **Search** – Find resources quickly
+- **Account menu** – Profile, settings, logout
 
 ### Left Sidebar
-- **All sections** - Navigate to different products
-- **Collapse/Expand** - Click the menu icon to toggle
+- **Build** → **Compute & AI** – Workers, AI, etc.
+- **Storage & databases** – R2, D1, KV, Vectorize
+- Use the collapse icon to hide/show sections
 
 ### Main Content Area
-- **Current page** - Shows Workers, R2, D1, etc.
-- **Action buttons** - Create, edit, delete resources
+- Shows the current product (Workers, R2, etc.)
+- Includes primary action buttons (Create application, Add binding, etc.)
 
 ---
 
-## Step 6: Create Your First Worker
+## Step 5: Create Your First Worker
 
 1. Click **Build** → **Compute & AI** → **Workers & Pages**
 2. Click the blue **Create application** button (top right)
