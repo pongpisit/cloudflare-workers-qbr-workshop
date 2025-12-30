@@ -566,10 +566,11 @@ export default {
     }
 
     tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
+      tab.addEventListener('click', (event) => {
         tabs.forEach((t) => t.classList.remove('active'));
-        tab.classList.add('active');
-        currentMode = tab.dataset.mode;
+        const target = event.currentTarget;
+        target.classList.add('active');
+        currentMode = target.dataset.mode;
         if (currentMode === 'chat') {
           chatPanel.classList.remove('hidden');
           imagePanel.classList.add('hidden');
