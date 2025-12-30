@@ -8,30 +8,25 @@ Learn to build applications with **Cloudflare Workers** using the **Cloudflare D
 
 ## What You Will Learn
 
-| Module | Topic |
-|--------|-------|
-| 1 | Create your first Worker via Dashboard |
-| 2 | Build a profile page with HTML/CSS/JavaScript |
-| 3 | Store images with R2 and data with D1 |
-| 4 | Build an Instagram-style photo app |
-| 5 | Add AI chatbot with Workers AI |
-| 6 | Deploy your complete application |
+- Navigate the Cloudflare Dashboard
+- Create Workers without using the CLI
+- Store assets in R2 and data in D1
+- Build an Instagram-style photo feed
+- Add AI chat + image generation
 
 ---
 
 ## Workshop Modules
 
-| # | Module | Time | Description |
-|---|--------|------|-------------|
-| 1 | [Dashboard Setup](./docs/01-dashboard-setup.md) | 15 min | Create Cloudflare account, navigate Dashboard |
-| 2 | [Hello World Worker](./docs/02-hello-world-worker.md) | 25 min | Create first Worker, return HTML/JSON |
-| 3 | [Profile Page](./docs/03-profile-page.md) | 30 min | Build personal profile page with styling |
-| 4 | [R2 Storage Setup](./docs/04-r2-storage.md) | 30 min | Create R2 bucket, upload images |
-| 5 | [D1 Database Setup](./docs/05-d1-database.md) | 30 min | Create D1 database, add captions |
-| 6 | [Photo Gallery App](./docs/06-photo-gallery.md) | 40 min | Build Instagram-style app with R2 + D1 |
-| 7 | [Workers AI Integration](./docs/07-workers-ai.md) | 35 min | Add AI chatbot + image studio |
-
-**Total Time: ~2.5 hours**
+| # | Module | Description |
+|---|--------|-------------|
+| 1 | [Dashboard Setup](./docs/01-dashboard-setup.md) | Create Cloudflare account, explore the Dashboard |
+| 2 | [Hello World Worker](./docs/02-hello-world-worker.md) | Create first Worker, return HTML/JSON |
+| 3 | [Profile Page](./docs/03-profile-page.md) | Build personal profile page with styling |
+| 4 | [R2 Storage Setup](./docs/04-r2-storage.md) | Create R2 bucket, upload images |
+| 5 | [D1 Database Setup](./docs/05-d1-database.md) | Create D1 database, add captions |
+| 6 | [Photo Gallery App](./docs/06-photo-gallery.md) | Build Instagram-style app with R2 + D1 |
+| 7 | [Workers AI Integration](./docs/07-workers-ai.md) | Add AI chatbot + image studio |
 
 ---
 

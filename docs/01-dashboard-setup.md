@@ -1,4 +1,4 @@
-# Module 1: Dashboard Setup (15 minutes)
+# Module 1: Dashboard Setup
 
 Learn to navigate the Cloudflare Dashboard and create your first Worker.
 
