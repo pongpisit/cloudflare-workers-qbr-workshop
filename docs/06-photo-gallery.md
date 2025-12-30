@@ -44,26 +44,26 @@ Build an Instagram-style photo gallery using R2 and D1. This module creates a **
 1. Click **Settings** tab at the top
 2. You'll see the **Bindings** section with "Add binding" button
 3. Click **Add binding** button
-4. A form will appear. Fill in:
-   - **Variable name**: `BUCKET`
-   - **Resource type**: `R2 Bucket`
-   - **Bucket name**: Select `photo-gallery`
-5. Click **Add binding** to save
-6. You'll see the binding appear in "Connected Bindings"
-7. Click **Deploy** to apply changes
+4. A modal will appear showing all binding types (Analytics engine, D1 database, KV namespace, R2 bucket, etc.)
+5. Click **R2 Bucket** option
+6. A configuration form will appear with two fields:
+   - **Variable name**: Enter `BUCKET`
+   - **R2 bucket**: Click dropdown and select `photo-gallery`
+7. Click **Deploy** button to save and apply
+8. You'll see the binding appear in "Connected Bindings"
 
 ---
 
 ## Step 4: Add D1 Binding to New Worker
 
 1. In the same **Settings** tab, click **Add binding** again
-2. A form will appear. Fill in:
-   - **Variable name**: `MY_PHOTOS_DB`
-   - **Resource type**: `D1 Database`
-   - **Database**: Select `workshop-db` (from Module 5)
-3. Click **Add binding** to save
-4. You'll see the second binding appear in "Connected Bindings"
-5. Click **Deploy** to apply changes
+2. A modal will appear showing all binding types
+3. Click **D1 database** option
+4. A configuration form will appear with two fields:
+   - **Variable name**: Enter `MY_PHOTOS_DB`
+   - **Database**: Click dropdown and select `workshop-db` (from Module 5)
+5. Click **Deploy** button to save and apply
+6. You'll see the second binding appear in "Connected Bindings"
 
 Now you have both bindings configured:
 - `BUCKET` → `photo-gallery` R2 bucket
