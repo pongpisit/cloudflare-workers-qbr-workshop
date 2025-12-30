@@ -24,9 +24,7 @@ Build an Instagram-style photo gallery using R2 and D1. This module creates a **
 4. Enter bucket name: `photo-gallery`
 5. Keep default region (Asia Pacific)
 6. Click **Create bucket**
-7. Go to **Settings** tab
-8. Under **Public access**, click **Allow access**
-9. Copy your R2 public URL (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
+7. **No need to enable public access** - we'll serve images through the Worker
 
 ---
 
@@ -45,7 +43,7 @@ Build an Instagram-style photo gallery using R2 and D1. This module creates a **
 1. Click **Settings** tab
 2. Under **Bindings**, click **Add binding**
 3. Fill in:
-   - **Variable name**: `photos`
+   - **Variable name**: `BUCKET`
    - **Resource type**: `R2 Bucket`
    - **Bucket name**: `photo-gallery`
 4. Click **Save and deploy**
@@ -57,25 +55,14 @@ Build an Instagram-style photo gallery using R2 and D1. This module creates a **
 1. Click **Settings** tab again
 2. Under **Bindings**, click **Add binding**
 3. Fill in:
-   - **Variable name**: `DB`
+   - **Variable name**: `MY_PHOTOS_DB`
    - **Resource type**: `D1 Database`
    - **Database**: Select `workshop-db` (from Module 5)
 4. Click **Save and deploy**
 
 ---
 
-## Step 5: Add Environment Variable for R2 URL
-
-1. Click **Settings** tab
-2. Under **Variables and Secrets**, click **Add variable**
-3. Fill in:
-   - **Variable name**: `R2_URL`
-   - **Value**: Your R2 public URL (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
-4. Click **Deploy**
-
----
-
-## Step 6: Update Your Worker Code
+## Step 5: Update Your Worker Code
 
 Go to your Worker and replace all code with this:
 
@@ -83,216 +70,161 @@ Go to your Worker and replace all code with this:
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const path = url.pathname;
 
-    // Home page - Photo gallery
-    if (path === '/') {
-      try {
-        // Query photos from D1
-        const db = env.DB;
-        const result = await db.prepare(
-          'SELECT id, filename, caption FROM photos ORDER BY created_at DESC'
-        ).all();
-
-        const photos = result.results || [];
-        const r2Url = env.R2_URL;
-
-        let html = `
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Photo Gallery</title>
-            <style>
-              * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-              }
-
-              body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: #f5f5f5;
-                padding: 20px;
-              }
-
-              .container {
-                max-width: 1200px;
-                margin: 0 auto;
-              }
-
-              h1 {
-                text-align: center;
-                color: #333;
-                margin-bottom: 10px;
-                font-size: 2.5em;
-              }
-
-              .subtitle {
-                text-align: center;
-                color: #999;
-                margin-bottom: 40px;
-                font-size: 1.1em;
-              }
-
-              .gallery {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 20px;
-              }
-
-              .photo-card {
-                background: white;
-                border-radius: 12px;
-                overflow: hidden;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s, box-shadow 0.3s;
-              }
-
-              .photo-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-              }
-
-              .photo-image {
-                width: 100%;
-                height: 250px;
-                object-fit: cover;
-                background: #e0e0e0;
-              }
-
-              .photo-info {
-                padding: 15px;
-              }
-
-              .photo-caption {
-                color: #333;
-                font-size: 1em;
-                line-height: 1.5;
-                margin-bottom: 10px;
-              }
-
-              .photo-filename {
-                color: #999;
-                font-size: 0.85em;
-              }
-
-              .empty {
-                text-align: center;
-                padding: 60px 20px;
-                color: #999;
-              }
-
-              .empty-icon {
-                font-size: 4em;
-                margin-bottom: 20px;
-              }
-
-              @media (max-width: 600px) {
-                .gallery {
-                  grid-template-columns: 1fr;
-                }
-
-                h1 {
-                  font-size: 1.8em;
-                }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <h1> Photo Gallery</h1>
-              <p class="subtitle">Built with Cloudflare Workers, R2, and D1</p>
-        `;
-
-        if (photos.length === 0) {
-          html += `
-            <div class="empty">
-              <div class="empty-icon"></div>
-              <p>No photos yet. Upload some images to R2 and add captions to D1!</p>
-            </div>
-          `;
-        } else {
-          html += '<div class="gallery">';
-
-          for (const photo of photos) {
-            const imageUrl = `${r2Url}/${photo.filename}`;
-            html += `
-              <div class="photo-card">
-                <img src="${imageUrl}" alt="${photo.caption}" class="photo-image">
-                <div class="photo-info">
-                  <div class="photo-caption">${photo.caption || 'No caption'}</div>
-                  <div class="photo-filename">${photo.filename}</div>
-                </div>
-              </div>
-            `;
-          }
-
-          html += '</div>';
-        }
-
-        html += `
-            </div>
-          </body>
-          </html>
-        `;
-
-        return new Response(html, {
-          headers: { 'Content-Type': 'text/html' }
-        });
-      } catch (error) {
-        return new Response(`
-          <!DOCTYPE html>
-          <html>
-          <head><title>Error</title></head>
-          <body>
-            <h1>Error loading photos</h1>
-            <p>${error.message}</p>
-            <p>Make sure D1 is configured in your Worker settings.</p>
-          </body>
-          </html>
-        `, {
-          status: 500,
-          headers: { 'Content-Type': 'text/html' }
-        });
-      }
+    // Auto-initialize database table on every request
+    try {
+      await env.MY_PHOTOS_DB.prepare(`
+        CREATE TABLE IF NOT EXISTS photos (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          filename TEXT NOT NULL,
+          caption TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      `).run();
+    } catch (e) {
+      // Table already exists, ignore error
     }
 
-    // API endpoint to get photos as JSON
-    if (path === '/api/photos') {
-      try {
-        const db = env.DB;
-        const result = await db.prepare(
-          'SELECT id, filename, caption FROM photos ORDER BY created_at DESC'
-        ).all();
-
-        return new Response(JSON.stringify({
-          success: true,
-          count: result.results.length,
-          photos: result.results
-        }), {
-          headers: { 'Content-Type': 'application/json' }
-        });
-      } catch (error) {
-        return new Response(JSON.stringify({
-          success: false,
-          error: error.message
-        }), {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' }
-        });
-      }
+    if (url.pathname === "/") return showFeed(env);
+    
+    if (url.pathname === "/upload" && request.method === "POST") {
+      const formData = await request.formData();
+      const file = formData.get("image");
+      const caption = formData.get("caption") || "";
+      
+      if (!file) return new Response("No file", { status: 400 });
+      
+      const filename = Date.now() + "-" + file.name;
+      await env.BUCKET.put(filename, file.stream(), {
+        httpMetadata: { contentType: file.type }
+      });
+      
+      await env.MY_PHOTOS_DB.prepare("INSERT INTO photos (filename, caption) VALUES (?, ?)")
+        .bind(filename, caption)
+        .run();
+      
+      return Response.redirect(new URL("/", request.url).toString(), 302);
     }
-
-    return new Response('Not found', { status: 404 });
+    
+    if (url.pathname.startsWith("/image/")) {
+      const object = await env.BUCKET.get(url.pathname.replace("/image/", ""));
+      if (!object) return new Response("Not found", { status: 404 });
+      return new Response(object.body, {
+        headers: { "content-type": object.httpMetadata?.contentType || "image/jpeg" }
+      });
+    }
+    
+    if (url.pathname.startsWith("/delete/") && request.method === "POST") {
+      const id = url.pathname.replace("/delete/", "");
+      const photo = await env.MY_PHOTOS_DB.prepare("SELECT filename FROM photos WHERE id = ?").bind(id).first();
+      if (photo) {
+        await env.BUCKET.delete(photo.filename);
+        await env.MY_PHOTOS_DB.prepare("DELETE FROM photos WHERE id = ?").bind(id).run();
+      }
+      return Response.redirect(new URL("/", request.url).toString(), 302);
+    }
+    
+    if (url.pathname === "/api/photos") {
+      const { results } = await env.MY_PHOTOS_DB.prepare("SELECT * FROM photos ORDER BY created_at DESC").all();
+      return Response.json(results);
+    }
+    
+    return new Response("Not found", { status: 404 });
   }
 };
+
+async function showFeed(env) {
+  const { results: photos } = await env.MY_PHOTOS_DB.prepare(
+    "SELECT * FROM photos ORDER BY created_at DESC"
+  ).all();
+  
+  let postsHtml = "";
+  if (photos.length === 0) {
+    postsHtml = '<p class="empty">No posts yet. Share your first photo!</p>';
+  } else {
+    for (const photo of photos) {
+      const date = new Date(photo.created_at).toLocaleDateString();
+      postsHtml += `
+        <article class="post">
+          <img src="/image/${photo.filename}" alt="">
+          <div class="post-content">
+            <p class="caption">${photo.caption || ""}</p>
+            <p class="date">${date}</p>
+            <form action="/delete/${photo.id}" method="POST" class="delete-form">
+              <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
+            </form>
+          </div>
+        </article>`;
+    }
+  }
+
+  return new Response(`<!DOCTYPE html>
+<html>
+<head>
+  <title>PhotoGram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; background: #fafafa; min-height: 100vh; }
+    
+    header { background: white; border-bottom: 1px solid #dbdbdb; padding: 12px 20px; position: sticky; top: 0; z-index: 100; }
+    .header-content { max-width: 600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 24px; font-weight: 600; font-style: italic; }
+    
+    .new-post-btn { background: #0095f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .new-post-btn:hover { background: #1877f2; }
+    
+    .feed { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+    
+    .post { background: white; border: 1px solid #dbdbdb; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+    .post img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .post-content { padding: 15px; }
+    .caption { font-size: 14px; line-height: 1.5; margin-bottom: 8px; }
+    .date { font-size: 12px; color: #8e8e8e; margin-bottom: 10px; }
+    .delete-form button { background: none; border: none; color: #ed4956; cursor: pointer; font-size: 12px; }
+    .delete-form button:hover { text-decoration: underline; }
+    
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; justify-content: center; align-items: center; }
+    .modal.active { display: flex; }
+    .modal-box { background: white; border-radius: 12px; padding: 20px; width: 90%; max-width: 400px; }
+    .modal-box h2 { margin-bottom: 15px; font-size: 18px; }
+    .modal-box input[type="file"] { margin-bottom: 15px; }
+    .modal-box textarea { width: 100%; height: 80px; border: 1px solid #dbdbdb; border-radius: 8px; padding: 10px; resize: none; font-family: inherit; margin-bottom: 15px; }
+    .modal-box button[type="submit"] { width: 100%; background: #0095f6; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 30px; cursor: pointer; }
+    
+    .empty { text-align: center; padding: 60px 20px; color: #8e8e8e; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">PhotoGram</div>
+      <button class="new-post-btn" onclick="document.getElementById('modal').classList.add('active')">New Post</button>
+    </div>
+  </header>
+  
+  <div id="modal" class="modal" onclick="if(event.target===this)this.classList.remove('active')">
+    <button class="close-btn" onclick="document.getElementById('modal').classList.remove('active')">&times;</button>
+    <div class="modal-box">
+      <h2>Create New Post</h2>
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <textarea name="caption" placeholder="Write a caption..."></textarea>
+        <button type="submit">Share</button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="feed">${postsHtml}</div>
+</body>
+</html>`, { headers: { "content-type": "text/html" } });
+}
 ```
 
 ---
 
-## Step 7: Save and Deploy
+## Step 6: Save and Deploy
 
 1. Click **Save and Deploy**
 2. Wait for deployment
@@ -301,58 +233,49 @@ export default {
 
 ---
 
-## Step 8: Test the Gallery
+## Step 7: Test Your Photo Gallery
 
 1. Visit your Worker URL
-2. You should see photos from R2 with captions from D1
-3. Hover over photos to see the hover effect
-4. Try the `/api/photos` endpoint to get JSON data
-
----
-
-## Step 9: Add More Photos
-
-To add more photos:
-
-1. **Upload images to R2 bucket** (`photo-gallery`)
-2. **Add captions to D1** (`workshop-db`)
-
-In D1 Console, run:
-```sql
-INSERT INTO photos (filename, caption) VALUES
-('photo4.jpg', 'Your caption here');
-```
-
-Then refresh your gallery page to see the new photo.
+2. Click **New Post** button
+3. Upload an image and add a caption
+4. Click **Share**
+5. Your photo should appear in the feed
+6. Try the `/api/photos` endpoint to get JSON data
 
 ---
 
 ## Key Features
 
- Displays images from R2  
- Shows captions from D1  
- Responsive grid layout  
- Hover effects  
- JSON API endpoint  
- Error handling  
+ Upload photos directly from Worker  
+ Store images in R2 using binding  
+ Store captions in D1 database  
+ Display photos in Instagram-style feed  
+ Delete photos with confirmation  
+ JSON API endpoint (`/api/photos`)  
+ Auto-initialize database table  
+ Serve images directly from Worker (no public URL needed)  
 
 ---
 
-## Dashboard Navigation Summary
+## How It Works
 
-```
-Cloudflare Dashboard
-├── Build
-│   ├── Compute & AI
-│   │   ├── Workers & Pages
-│   │   │   ├── Your Worker
-│   │   │   │   ├── Editor (code)
-│   │   │   │   └── Settings (D1 binding)
-│   │
-│   ├── Storage & databases
-│   │   ├── R2 object storage (images)
-│   │   └── D1 SQL database (captions)
-```
+**Upload Flow:**
+1. User uploads image via form
+2. Worker saves image to R2 bucket using `env.BUCKET.put()`
+3. Worker saves filename + caption to D1
+4. User is redirected to feed
+
+**Display Flow:**
+1. Worker queries D1 for all photos
+2. For each photo, creates `<img src="/image/{filename}">`
+3. `/image/` endpoint retrieves image from R2 using `env.BUCKET.get()`
+4. Image is served with correct content-type
+
+**Delete Flow:**
+1. User clicks delete button
+2. Worker deletes file from R2
+3. Worker deletes record from D1
+4. User is redirected to feed
 
 ---
 
@@ -364,19 +287,25 @@ Ready to add AI? Go to **[Module 7: Workers AI Integration](./07-workers-ai.md)*
 
 ## Troubleshooting
 
-### Photos not showing?
-- Check R2 URL is correct
-- Verify images are uploaded to R2
-- Check public access is enabled on R2
+### Photos not uploading?
+- Check R2 binding is configured correctly
+- Verify binding variable name is `BUCKET`
+- Check file size is reasonable
 
-### Captions not showing?
+### Photos not displaying?
 - Verify D1 binding is configured
 - Check database has photos table
 - Run `SELECT * FROM photos;` in D1 Console
+- Check `/image/` endpoint is working
+
+### Delete not working?
+- Make sure both R2 and D1 bindings are configured
+- Verify filename is stored correctly in database
+- Check R2 bucket has the file
 
 ### Database error?
 - Make sure D1 binding is added in Settings
-- Check binding variable name is `DB`
+- Check binding variable name is `MY_PHOTOS_DB`
 - Verify database is selected correctly
 
 ---
