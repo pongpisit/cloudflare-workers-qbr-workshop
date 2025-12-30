@@ -34,8 +34,8 @@ Build an Instagram-style photo gallery using R2 and D1. This module creates a **
 2. Click **Create application** → **Create Worker**
 3. Name it: `photo-gallery`
 4. Click **Deploy**
-5. You'll see a "Start with Hello World!" template
-6. Click **Edit code**
+5. You'll see a "Start with Hello World!" template - that's fine, we'll update it later
+6. Once deployed, proceed to add bindings in the next step
 
 ---
 
