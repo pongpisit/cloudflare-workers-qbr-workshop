@@ -523,7 +523,6 @@ export default {
     const chatPanel = document.getElementById('chat-panel');
     const imagePanel = document.getElementById('image-panel');
     const sidebarTitle = document.getElementById('sidebar-title');
-    const modelGrid = document.getElementById('model-grid');
     const modelPill = document.getElementById('model-pill');
     const modelPillLabel = document.getElementById('model-pill-label');
 
@@ -548,7 +547,7 @@ export default {
     function appendMessage(role, text, meta) {
       const block = document.createElement('div');
       block.className = 'message ' + role;
-      block.innerHTML = text.replace(/\n/g, '<br>');
+      block.innerHTML = text.replace(/\\n/g, '<br>');
       if (meta) {
         const metaEl = document.createElement('span');
         metaEl.className = 'meta';
