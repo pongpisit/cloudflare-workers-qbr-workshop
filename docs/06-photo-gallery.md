@@ -41,25 +41,33 @@ Build an Instagram-style photo gallery using R2 and D1. This module creates a **
 
 ## Step 3: Add R2 Binding to New Worker
 
-1. Click **Settings** tab
-2. Under **Bindings**, click **Add binding**
-3. Fill in:
+1. Click **Settings** tab at the top
+2. You'll see the **Bindings** section with "Add binding" button
+3. Click **Add binding** button
+4. A form will appear. Fill in:
    - **Variable name**: `BUCKET`
    - **Resource type**: `R2 Bucket`
-   - **Bucket name**: `photo-gallery`
-4. Click **Save and deploy**
+   - **Bucket name**: Select `photo-gallery`
+5. Click **Add binding** to save
+6. You'll see the binding appear in "Connected Bindings"
+7. Click **Deploy** to apply changes
 
 ---
 
 ## Step 4: Add D1 Binding to New Worker
 
-1. Click **Settings** tab again
-2. Under **Bindings**, click **Add binding**
-3. Fill in:
+1. In the same **Settings** tab, click **Add binding** again
+2. A form will appear. Fill in:
    - **Variable name**: `MY_PHOTOS_DB`
    - **Resource type**: `D1 Database`
    - **Database**: Select `workshop-db` (from Module 5)
-4. Click **Save and deploy**
+3. Click **Add binding** to save
+4. You'll see the second binding appear in "Connected Bindings"
+5. Click **Deploy** to apply changes
+
+Now you have both bindings configured:
+- `BUCKET` → `photo-gallery` R2 bucket
+- `MY_PHOTOS_DB` → `workshop-db` D1 database
 
 ---
 
