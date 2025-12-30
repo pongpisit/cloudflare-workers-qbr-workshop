@@ -165,6 +165,17 @@ export default {
     const path = url.pathname;
 
     if (path === '/') {
+      let profileImageHtml = '[Profile]';
+      
+      try {
+        const profilePic = await env.mybucket.get('profile-picture');
+        if (profilePic) {
+          profileImageHtml = '<img src="https://pub-xxxxxxxxxxxxxxxx.r2.dev/profile-picture" alt="Profile Picture">';
+        }
+      } catch (e) {
+        console.log('No profile picture yet');
+      }
+
       return new Response(`
         <!DOCTYPE html>
         <html>
@@ -373,7 +384,7 @@ export default {
         <body>
           <div class="container">
             <div class="header">
-              <div class="avatar">[Profile]</div>
+              <div class="avatar">${profileImageHtml}</div>
               <div class="name">Your Name</div>
               <div class="title">Full Stack Developer</div>
               <div class="location">Your City, Country</div>
@@ -468,10 +479,9 @@ export default {
       }
 
       try {
-        const filename = 'profile-' + Date.now() + '-' + file.name;
-        await env.mybucket.put(filename, file);
+        await env.mybucket.put('profile-picture', file);
         
-        const publicUrl = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev/' + filename;
+        const publicUrl = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev/profile-picture';
         return new Response(JSON.stringify({ url: publicUrl }), {
           headers: { 'Content-Type': 'application/json' }
         });
