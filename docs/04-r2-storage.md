@@ -552,21 +552,6 @@ The image automatically resizes to fit the circular profile picture frame thanks
 
 ---
 
-## Step 9: Understand R2 Pricing
-
-R2 is very affordable:
-
-| Item | Cost |
-|------|------|
-| Storage | $0.015 per GB/month |
-| Upload | Free |
-| Download | Free (first 10GB/month) |
-| Requests | $0.36 per million |
-
-For this workshop, you'll stay in the free tier.
-
----
-
 ## Key Takeaways
 
  Created an R2 bucket  
