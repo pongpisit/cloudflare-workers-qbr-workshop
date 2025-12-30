@@ -141,20 +141,6 @@ xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 ---
 
-## Step 8: Understand D1 Pricing
-
-D1 is very affordable:
-
-| Item | Cost |
-|------|------|
-| Storage | $0.50 per GB/month |
-| Reads | Free (first 10M/month) |
-| Writes | Free (first 100k/month) |
-
-For this workshop, you'll stay in the free tier.
-
----
-
 ## Key Takeaways
 
  Created a D1 database  

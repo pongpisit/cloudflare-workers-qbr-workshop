@@ -269,7 +269,6 @@ You've successfully:
 - [Cloudflare Dashboard](https://dash.cloudflare.com)
 - [Workers Documentation](https://developers.cloudflare.com/workers/)
 - [Community Discord](https://discord.gg/cloudflaredev)
-- [Workers Pricing](https://developers.cloudflare.com/workers/platform/pricing/)
 
 ---
 

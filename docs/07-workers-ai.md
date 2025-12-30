@@ -472,4 +472,3 @@ Ready to deploy? Go to **[Module 8: Deploy & Share](./08-deploy-share.md)** to s
 
 - [Workers AI Documentation](https://developers.cloudflare.com/workers-ai/)
 - [Available AI Models](https://developers.cloudflare.com/workers-ai/models/)
-- [AI Pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/)
