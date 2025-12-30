@@ -168,6 +168,10 @@ export default {
       gap: 12px;
     }
 
+    .model-grid.hidden {
+      display: none !important;
+    }
+
     .model-option {
       width: 100%;
       border-radius: 16px;
@@ -444,7 +448,34 @@ export default {
     <div class="layout">
       <aside class="sidebar">
         <h2 id="sidebar-title">Pick a Model</h2>
-        <div class="model-grid" id="model-grid"></div>
+        <div class="model-grid" id="chat-models">
+          <button class="model-option active" data-model="@cf/meta/llama-3.1-8b-instruct" data-label="Llama 3.1 8B">
+            <span class="model-name">Llama 3.1 8B</span>
+            <span class="model-desc">Balanced, friendly answers</span>
+          </button>
+          <button class="model-option" data-model="@cf/meta/llama-3.2-3b-instruct" data-label="Llama 3.2 3B">
+            <span class="model-name">Llama 3.2 3B</span>
+            <span class="model-desc">Fast responses</span>
+          </button>
+          <button class="model-option" data-model="@cf/mistral/mistral-7b-instruct-v0.1" data-label="Mistral 7B">
+            <span class="model-name">Mistral 7B</span>
+            <span class="model-desc">Creative storytelling</span>
+          </button>
+          <button class="model-option" data-model="@cf/google/gemma-3-12b-it" data-label="Gemma 3 12B">
+            <span class="model-name">Gemma 3 12B</span>
+            <span class="model-desc">Multilingual + structured</span>
+          </button>
+        </div>
+        <div class="model-grid hidden" id="image-models">
+          <button class="model-option active" data-model="@cf/stabilityai/stable-diffusion-xl-base-1.0" data-label="Stable Diffusion XL">
+            <span class="model-name">Stable Diffusion XL</span>
+            <span class="model-desc">High quality detail</span>
+          </button>
+          <button class="model-option" data-model="@cf/bytedance/stable-diffusion-xl-lightning" data-label="SDXL Lightning">
+            <span class="model-name">SDXL Lightning</span>
+            <span class="model-desc">Fast 4-step render</span>
+          </button>
+        </div>
       </aside>
       <section class="panels">
         <div class="panel" id="chat-panel">
@@ -511,6 +542,8 @@ export default {
     let currentMode = 'chat';
     let selectedChatModel = chatModels[0].value;
     let selectedImageModel = imageEngines[0].value;
+    const chatModelsGrid = document.getElementById('chat-models');
+    const imageModelsGrid = document.getElementById('image-models');
 
     function appendMessage(role, text, meta) {
       const block = document.createElement('div');
@@ -527,43 +560,50 @@ export default {
       container.scrollTop = container.scrollHeight;
     }
 
+    function setActiveButton(grid, targetModel) {
+      grid.querySelectorAll('.model-option').forEach((btn) => {
+        if (btn.dataset.model === targetModel) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
     function renderSidebar() {
-      modelGrid.innerHTML = '';
       if (currentMode === 'chat') {
         sidebarTitle.textContent = 'Pick a Model';
         modelPillLabel.textContent = 'Current model:';
+        chatModelsGrid.classList.remove('hidden');
+        imageModelsGrid.classList.add('hidden');
         const active = chatModels.find((m) => m.value === selectedChatModel) || chatModels[0];
         modelPill.textContent = active.label;
-        chatModels.forEach((model) => {
-          const btn = document.createElement('button');
-          btn.className = 'model-option' + (model.value === selectedChatModel ? ' active' : '');
-          btn.dataset.model = model.value;
-          btn.innerHTML = '<span class="model-name">' + model.label + '</span><span class="model-desc">' + model.desc + '</span>';
-          btn.addEventListener('click', () => {
-            selectedChatModel = model.value;
-            renderSidebar();
-            appendMessage('ai', 'Switched to <strong>' + model.label + '</strong>. Ask me anything!', 'System');
-          });
-          modelGrid.appendChild(btn);
-        });
+        setActiveButton(chatModelsGrid, selectedChatModel);
       } else {
         sidebarTitle.textContent = 'Choose an Image Engine';
         modelPillLabel.textContent = 'Image model:';
+        chatModelsGrid.classList.add('hidden');
+        imageModelsGrid.classList.remove('hidden');
         const active = imageEngines.find((m) => m.value === selectedImageModel) || imageEngines[0];
         modelPill.textContent = active.label;
-        imageEngines.forEach((engine) => {
-          const btn = document.createElement('button');
-          btn.className = 'model-option' + (engine.value === selectedImageModel ? ' active' : '');
-          btn.dataset.model = engine.value;
-          btn.innerHTML = '<span class="model-name">' + engine.label + '</span><span class="model-desc">' + engine.desc + '</span>';
-          btn.addEventListener('click', () => {
-            selectedImageModel = engine.value;
-            renderSidebar();
-          });
-          modelGrid.appendChild(btn);
-        });
+        setActiveButton(imageModelsGrid, selectedImageModel);
       }
     }
+
+    chatModelsGrid.querySelectorAll('.model-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedChatModel = btn.dataset.model;
+        renderSidebar();
+        appendMessage('ai', 'Switched to <strong>' + btn.dataset.label + '</strong>. Ask me anything!', 'System');
+      });
+    });
+
+    imageModelsGrid.querySelectorAll('.model-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedImageModel = btn.dataset.model;
+        renderSidebar();
+      });
+    });
 
     tabs.forEach((tab) => {
       tab.addEventListener('click', (event) => {
