@@ -29,14 +29,9 @@ Learn to build applications with **Cloudflare Workers** using the **Cloudflare D
 | 4 | [R2 Storage Setup](./docs/04-r2-storage.md) | 30 min | Create R2 bucket, upload images |
 | 5 | [D1 Database Setup](./docs/05-d1-database.md) | 30 min | Create D1 database, add captions |
 | 6 | [Photo Gallery App](./docs/06-photo-gallery.md) | 40 min | Build Instagram-style app with R2 + D1 |
-| 7 | [Workers AI Integration](./docs/07-workers-ai.md) | 35 min | Add AI chatbot with multiple models |
-| 8 | [Deploy & Share](./docs/08-deploy-share.md) | 15 min | Deploy to production, share with others |
+| 7 | [Workers AI Integration](./docs/07-workers-ai.md) | 35 min | Add AI chatbot + image studio |
 
-**Total Time: ~3 hours**
-
-### Want the final app?
-
-Skip to [Module 8: Deploy & Share](./docs/08-deploy-share.md) - clone and deploy in 15 minutes.
+**Total Time: ~2.5 hours**
 
 ---
 
