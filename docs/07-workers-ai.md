@@ -353,7 +353,7 @@ export default {
       font-size: 14px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
+      color: #ffffff;
     }
 
     .image-card textarea {
