@@ -814,55 +814,59 @@ export default {
 
 ---
 
-## Step 5: Test the Chatbot
+## Step 5: Try Both Modes
 
-1. Type a message in the chat box
-2. Click **Send** or press Enter
-3. The AI will respond
-4. Try different questions:
-   - "What is Cloudflare Workers?"
-   - "Tell me a joke"
-   - "Explain machine learning"
+### Chat Mode
+1. Use the **Chat Mode** tab.
+2. Pick a chat model in the sidebar (Llama 3.1 8B, Llama 3.2 3B, Mistral 7B, or Gemma 3 12B).
+3. Ask the same question across models to compare tone, speed, and style.  
+   Example prompts:
+   - “What is Cloudflare Workers?”
+   - “Explain R2 vs. D1.”
+   - “Write a haiku about orange gradients.”
 
----
-
-## Step 6: Understand the AI Models
-
-Workers AI supports multiple models:
-
-| Model | Best For |
-|-------|----------|
-| `@cf/mistral/mistral-7b-instruct-v0.1` | General chat (default) |
-| `@cf/meta/llama-2-7b-chat-int8` | Conversational AI |
-| `@cf/openai/whisper` | Speech to text |
-| `@cf/stabilityai/stable-diffusion-xl-base-1.0` | Image generation |
+### Image Studio
+1. Switch to the **Image Studio** tab.
+2. Pick an image engine (Stable Diffusion XL for detail, SDXL Lightning for speed).
+3. Type a description or click a preset prompt (Robot + Guitar, Magic Forest, etc.).
+4. Click **Generate image** and wait 10‑30 seconds. The preview panel shows the result plus which engine rendered it.
 
 ---
 
-## Step 7: Change the AI Model (Optional)
+## Step 6: Understand the Available Models
 
-To use a different model, change this line:
+### Chat Models
+| Model | Description |
+|-------|-------------|
+| `@cf/meta/llama-3.1-8b-instruct` | Balanced assistant for detailed answers |
+| `@cf/meta/llama-3.2-3b-instruct` | Faster responses for lightweight queries |
+| `@cf/mistral/mistral-7b-instruct-v0.1` | Creative storytelling & ideation |
+| `@cf/google/gemma-3-12b-it` | Structured, multilingual support |
 
-```javascript
-const response = await env.AI.run('@cf/mistral/mistral-7b-instruct-v0.1', {
-```
+### Image Engines
+| Engine | Description |
+|--------|-------------|
+| `@cf/stabilityai/stable-diffusion-xl-base-1.0` | Highest fidelity, slower |
+| `@cf/bytedance/stable-diffusion-xl-lightning` | Fast 4-step renders |
 
-To:
+---
 
-```javascript
-const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
-```
+## Step 7: Advanced Customization
+
+- **System Prompt**: Update the `role: 'system'` message to change tone or instructions.
+- **Default Models**: Change `selectedChatModel` or `selectedImageModel` to preselect a different option.
+- **Add Options**: Duplicate the button markup in the sidebar to add more models/engines (be sure to update `imageEngines` or `chatModels` arrays).
 
 ---
 
 ## Key Features
 
- Real-time chat interface  
- AI-powered responses  
- Beautiful UI with animations  
- Mobile responsive  
- Error handling  
- Multiple AI models available  
+- Real-time chat interface powered by Workers AI  
+- Two-mode UI (Chat + Image Studio) with Cloudflare gradients  
+- Model pickers synced to each mode  
+- Image previews and preset prompts  
+- Error handling + status messages  
+- Fully responsive layout  
 
 ---
 
