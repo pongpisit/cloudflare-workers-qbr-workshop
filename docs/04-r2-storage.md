@@ -154,14 +154,30 @@ The variable name you chose (`mybucket`) becomes `env.mybucket` in your Worker c
 
 ---
 
-## Step 6: Add Upload Button to Your Profile Page
+## Step 6: Add Environment Variable for R2 URL
 
-Now that R2 is bound to your Worker, copy and paste this complete code into your Worker. Replace `https://pub-xxxxxxxxxxxxxxxx.r2.dev` with your actual R2 public URL from Step 4 (only need to replace it once at the top).
+Before adding the upload button code, set up your R2 URL as an environment variable:
+
+1. Go to your Worker in the Dashboard
+2. Click **Settings** tab
+3. Under **Variables and Secrets**, click **Add**
+4. Set the following:
+   - **Variable name**: `R2_URL`
+   - **Value**: Your R2 public URL (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
+5. Click **Deploy**
+
+Now your Worker has access to the R2 URL via `env.R2_URL`.
+
+---
+
+## Step 7: Add Upload Button to Your Profile Page
+
+Now that R2 is bound to your Worker and the R2_URL environment variable is set, copy and paste this complete code into your Worker:
 
 ```javascript
 export default {
   async fetch(request, env) {
-    const R2_URL = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev';
+    const R2_URL = env.R2_URL;
     const url = new URL(request.url);
     const path = url.pathname;
 
@@ -498,7 +514,7 @@ export default {
 
 ---
 
-## Step 7: Test the Upload Feature
+## Step 8: Test the Upload Feature
 
 1. Go to your profile page
 2. Click the "Choose Image" button
@@ -508,7 +524,7 @@ export default {
 
 ---
 
-## Step 8: Display Your Profile Picture Automatically
+## Step 9: Display Your Profile Picture Automatically
 
 Your Worker already displays the profile picture automatically! When you upload an image using the upload button, it's stored in R2 and displayed immediately on your profile page.
 
