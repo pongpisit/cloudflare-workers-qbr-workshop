@@ -126,21 +126,6 @@ Your database has a unique ID that you'll need to bind it to your Worker:
 
 ---
 
-## Step 8: Get Database Connection Info
-
-You'll need this to connect from your Worker:
-
-1. Click **Settings** tab
-2. Look for **Database ID**
-3. Copy the ID (you'll need it in the next module)
-
-Example:
-```
-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-```
-
----
-
 ## Key Takeaways
 
  Created a D1 database  
