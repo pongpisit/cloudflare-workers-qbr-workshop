@@ -113,7 +113,20 @@ photos table:
 
 ---
 
-## Step 7: Get Database Connection Info
+## Step 7: Find Your Database ID
+
+Your database has a unique ID that you'll need to bind it to your Worker:
+
+1. Go to your database **Overview** tab
+2. At the top of the page, you'll see:
+   - **D1 Database / workshop-db** followed by a long ID
+   - Example: `081311b3-b897-40a7-847b-bbc11d757a06`
+3. Click the **copy icon** next to the ID to copy it
+4. Save this ID - you'll need it when binding D1 to your Worker
+
+---
+
+## Step 8: Get Database Connection Info
 
 You'll need this to connect from your Worker:
 
