@@ -29,7 +29,7 @@ Add an AI chatbot to your Worker using Cloudflare's Workers AI.
 
 1. Click the **Bindings** tab at the top (next to Overview, Metrics, Deployments)
 2. Click **Add binding**
-3. A modal with binding types will appear — select **AI**
+3. A modal with binding types will appear — select **Worker AI**
 4. Click **Add binding** in the modal footer
 5. In the “AI binding” form, fill in:
    - **Variable name**: `AI`
