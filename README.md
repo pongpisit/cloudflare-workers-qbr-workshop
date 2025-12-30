@@ -1,8 +1,7 @@
 # Cloudflare Workers Dashboard Workshop
 
-Learn to build applications with **Cloudflare Workers** using the **Cloudflare Dashboard** (no CLI required). Complete in **3 hours**.
+Learn to build applications with **Cloudflare Workers** using the **Cloudflare Dashboard** (no CLI required). Complete in **2 hours**.
 
-**Updated for latest Cloudflare Dashboard navigation** ✨
 
 ---
 
@@ -44,17 +43,6 @@ Learn to build applications with **Cloudflare Workers** using the **Cloudflare D
 1. Go to [Module 1: Dashboard Setup](./docs/01-dashboard-setup.md)
 2. Follow each step with screenshots
 3. Copy and paste the code - no typing needed!
-
----
-
-## Key Features
-
-✅ **No CLI Required** - Everything via Cloudflare Dashboard  
-✅ **No Local Development** - Work directly in the cloud  
-✅ **No Node.js/npm** - No installation needed  
-✅ **Visual Step-by-Step** - Screenshots for every action  
-✅ **Copy-Paste Code** - All code ready to copy  
-✅ **Real Cloudflare Services** - Learn with actual products  
 
 ---
 
