@@ -83,8 +83,8 @@ Build
 ## Step 4: Navigate to Workers & Pages
 
 1. In the left sidebar, click **Build** → **Compute & AI** → **Workers & Pages**
-2. You'll see the Workers & Pages overview page
-3. Click the blue **Create application** button in the top right
+2. Review the Workers & Pages overview page to see any existing projects
+3. Locate the blue **Create application** button in the top right — we'll use it in Step 6
 
 ---
 
