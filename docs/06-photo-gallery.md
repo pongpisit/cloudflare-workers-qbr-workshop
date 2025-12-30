@@ -1,11 +1,13 @@
 # Module 6: Photo Gallery App (40 minutes)
 
-Build an Instagram-style photo gallery using R2 and D1.
+Build an Instagram-style photo gallery using R2 and D1. This module creates a **new Worker and new R2 bucket** - do not reuse from previous modules.
 
 ---
 
 ## What You'll Learn
 
+- Create a new Worker for photo gallery
+- Create a new R2 bucket for photos
 - Connect Worker to R2 bucket
 - Connect Worker to D1 database
 - Display images from R2
@@ -14,22 +16,66 @@ Build an Instagram-style photo gallery using R2 and D1.
 
 ---
 
-## Step 1: Prepare Your Information
+## Step 1: Create a New R2 Bucket for Photos
 
-Before you start, gather:
-
-1. **R2 Public URL** (from Module 4)
-   - Format: `https://pub-xxxxxxxxxxxxxxxx.r2.dev`
-
-2. **D1 Database ID** (from Module 5)
-   - Format: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`
-
-3. **Image filenames** (from Module 4)
-   - Example: `photo1.jpg`, `photo2.jpg`, `photo3.jpg`
+1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
+2. Click **Build** → **Storage & databases** → **R2 object storage**
+3. Click **Create bucket**
+4. Enter bucket name: `photo-gallery`
+5. Keep default region (Asia Pacific)
+6. Click **Create bucket**
+7. Go to **Settings** tab
+8. Under **Public access**, click **Allow access**
+9. Copy your R2 public URL (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
 
 ---
 
-## Step 2: Update Your Worker Code
+## Step 2: Create a New Worker for Photo Gallery
+
+1. Go to **Build** → **Compute & AI** → **Workers & Pages**
+2. Click **Create application** → **Create Worker**
+3. Name it: `photo-gallery`
+4. Click **Deploy**
+5. Click **Edit code**
+
+---
+
+## Step 3: Add R2 Binding to New Worker
+
+1. Click **Settings** tab
+2. Under **Bindings**, click **Add binding**
+3. Fill in:
+   - **Variable name**: `photos`
+   - **Resource type**: `R2 Bucket`
+   - **Bucket name**: `photo-gallery`
+4. Click **Save and deploy**
+
+---
+
+## Step 4: Add D1 Binding to New Worker
+
+1. Click **Settings** tab again
+2. Under **Bindings**, click **Add binding**
+3. Fill in:
+   - **Variable name**: `DB`
+   - **Resource type**: `D1 Database`
+   - **Database**: Select `workshop-db` (from Module 5)
+4. Click **Save and deploy**
+
+---
+
+## Step 5: Add Environment Variable for R2 URL
+
+1. Click **Settings** tab
+2. Under **Variables and Secrets**, click **Add variable**
+3. Fill in:
+   - **Variable name**: `R2_URL`
+   - **Value**: Your R2 public URL (e.g., `https://pub-xxxxxxxxxxxxxxxx.r2.dev`)
+4. Click **Deploy**
+
+---
+
+## Step 6: Update Your Worker Code
 
 Go to your Worker and replace all code with this:
 
@@ -49,7 +95,7 @@ export default {
         ).all();
 
         const photos = result.results || [];
-        const r2Url = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev'; // Replace with your R2 URL
+        const r2Url = env.R2_URL;
 
         let html = `
           <!DOCTYPE html>
@@ -246,39 +292,7 @@ export default {
 
 ---
 
-## Step 3: Replace R2 URL
-
-In the code above, find this line:
-
-```javascript
-const r2Url = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev';
-```
-
-Replace `xxxxxxxxxxxxxxxx` with your actual R2 public URL from Module 4.
-
-Example:
-```javascript
-const r2Url = 'https://pub-abc123def456.r2.dev';
-```
-
----
-
-## Step 4: Configure D1 Binding
-
-Now you need to connect your Worker to D1:
-
-1. In the Worker editor, click **Settings** button
-2. Look for **Bindings** section
-3. Click **Add binding**
-4. Fill in:
-   - **Variable name**: `DB`
-   - **Resource type**: `D1 Database`
-   - **Database**: Select your database from Module 5
-5. Click **Save and deploy**
-
----
-
-## Step 5: Save and Deploy
+## Step 7: Save and Deploy
 
 1. Click **Save and Deploy**
 2. Wait for deployment
@@ -287,7 +301,7 @@ Now you need to connect your Worker to D1:
 
 ---
 
-## Step 6: Test the Gallery
+## Step 8: Test the Gallery
 
 1. Visit your Worker URL
 2. You should see photos from R2 with captions from D1
@@ -296,12 +310,12 @@ Now you need to connect your Worker to D1:
 
 ---
 
-## Step 7: Add More Photos
+## Step 9: Add More Photos
 
 To add more photos:
 
-1. **Upload images to R2** (Module 4)
-2. **Add captions to D1** (Module 5)
+1. **Upload images to R2 bucket** (`photo-gallery`)
+2. **Add captions to D1** (`workshop-db`)
 
 In D1 Console, run:
 ```sql
