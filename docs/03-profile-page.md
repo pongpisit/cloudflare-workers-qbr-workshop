@@ -407,12 +407,12 @@ You can add or remove links as needed. Update the `href` with your actual profil
 
 ## Key Features
 
- Responsive design (works on mobile)  
- Gradient background  
- Hover effects on buttons  
- Professional styling  
- Multiple pages  
- Social media links  
+- [x] Responsive design (works on mobile)  
+- [x] Gradient background  
+- [x] Hover effects on buttons  
+- [x] Professional styling  
+- [x] Multiple pages  
+- [x] Social media links  
 
 ---
 

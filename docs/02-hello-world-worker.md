@@ -301,11 +301,11 @@ return new Response(JSON.stringify({
 
 ## Key Takeaways
 
-[x] Created a Worker with multiple routes  
-[x] Returned HTML with styling  
-[x] Returned JSON responses  
-[x] Handled 404 errors  
-[x] Customized the profile page  
+- [x] Created a Worker with multiple routes  
+- [x] Returned HTML with styling  
+- [x] Returned JSON responses  
+- [x] Handled 404 errors  
+- [x] Customized the profile page  
 
 ---
 
