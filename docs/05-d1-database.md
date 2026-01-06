@@ -128,11 +128,11 @@ Your database has a unique ID that you'll need to bind it to your Worker:
 
 ## Key Takeaways
 
- Created a D1 database  
- Created a table with SQL  
- Inserted sample data  
- Queried the data  
- Got database connection info  
+- [x] Created a D1 database  
+- [x] Created a table with SQL  
+- [x] Inserted sample data  
+- [x] Queried the data  
+- [x] Got database connection info  
 
 ---
 

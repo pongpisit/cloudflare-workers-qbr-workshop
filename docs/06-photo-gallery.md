@@ -575,14 +575,14 @@ function getTimeAgo(date) {
 
 ## Key Features
 
- Upload photos directly from Worker  
- Store images in R2 using binding  
- Store captions in D1 database  
- Display photos in Instagram-style feed  
- Delete photos with confirmation  
- JSON API endpoint (`/api/photos`)  
- Auto-initialize database table  
- Serve images directly from Worker (no public URL needed)  
+- [x] Upload photos directly from Worker  
+- [x] Store images in R2 using binding  
+- [x] Store captions in D1 database  
+- [x] Display photos in Instagram-style feed  
+- [x] Delete photos with confirmation  
+- [x] JSON API endpoint (`/api/photos`)  
+- [x] Auto-initialize database table  
+- [x] Serve images directly from Worker (no public URL needed)  
 
 ---
 

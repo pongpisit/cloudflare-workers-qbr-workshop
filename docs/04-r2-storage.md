@@ -554,11 +554,11 @@ The image automatically resizes to fit the circular profile picture frame thanks
 
 ## Key Takeaways
 
- Created an R2 bucket  
- Configured public access  
- Uploaded images  
- Got image URLs  
- Tested image access  
+- [x] Created an R2 bucket  
+- [x] Configured public access  
+- [x] Uploaded images  
+- [x] Got image URLs  
+- [x] Tested image access  
 
 ---
 

@@ -179,11 +179,11 @@ You can:
 
 ## Key Takeaways
 
-[x] Created a Cloudflare account  
-[x] Navigated the Dashboard  
-[x] Created your first Worker  
-[x] Deployed to the internet  
-[x] Tested your Worker  
+- [x] Created a Cloudflare account  
+- [x] Navigated the Dashboard  
+- [x] Created your first Worker  
+- [x] Deployed to the internet  
+- [x] Tested your Worker  
 
 ---
 
